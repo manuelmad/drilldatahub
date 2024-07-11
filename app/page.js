@@ -1,10 +1,10 @@
-'use client';
+// 'use client';
 import Image from "next/image";
 import styles from "./page.module.css";
 
 import MainView from "./MainView/MainView";
 
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 import { db } from "./firebase/firebase-config";
 import { collection, onSnapshot, doc, updateDoc } from "firebase/firestore";
