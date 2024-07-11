@@ -1,95 +1,72 @@
+'use client';
 import Image from "next/image";
 import styles from "./page.module.css";
 
+import MainView from "./MainView/MainView";
+
+import { useEffect } from "react";
+
+import { db } from "./firebase/firebase-config";
+import { collection, onSnapshot, doc, updateDoc } from "firebase/firestore";
+// import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
+
 export default function Home() {
+
+  // Get the collection 'alturitas' from firebase
+  // const ref = 'alturitas/ALT0053/eventos';
+  // const ALT53EventsCollection = collection(db, ref);
+
+  // useEffect(()=> {
+  //   // Listen to the current collection and get changes everytime a document is updated, created or deleted to update the trend info
+  //   onSnapshot(ALT53EventsCollection, (snapshot)=>{
+  //     //Getting all documents in firebasedatabase collection
+  //     const data = snapshot.docs;
+
+  //     data.forEach(event => {
+  //       console.log(event.id);
+  //       const eventInfo = event.data();
+  //       const dayi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getDate();
+  //       const monthi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getMonth();
+  //       const yeari = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getFullYear();
+    
+  //       const dayf = (new Date((eventInfo['Fecha Final'].seconds)*1000)).getDate();
+  //       const monthf = (new Date((eventInfo['Fecha Final'].seconds)*1000)).getMonth();
+  //       const yearf = (new Date((eventInfo['Fecha Final'].seconds)*1000)).getFullYear();
+
+  //       const p1 = document.createElement('p');
+  //       p1.innerHTML = `Fecha Inicial: ${dayi}/ ${monthi+1}/ ${yeari}`;
+
+  //       const p2 = document.createElement('p');
+  //       p2.innerHTML = `Fecha Final: ${dayf}/ ${monthf+1}/ ${yearf}`;
+
+  //       const ul = document.createElement('ul');
+
+  //       const ref2 = `${ref}/${event.id}/reportes`;
+  //       const ALT53ReportsCollection = collection(db, ref2);
+  //       onSnapshot(ALT53ReportsCollection, snapshot => {
+  //         const data2 = snapshot.docs;
+  //         data2.forEach(report => {
+  //           const activities = report.data().Actividades;
+  //           activities.forEach(activity => {
+  //             const li = document.createElement('li');
+  //             li.innerHTML = activity.Actividad;
+  //             ul.appendChild(li);
+  //           });
+            
+  //         });
+  //       });
+       
+  //       const div = document.getElementById('test');
+  //       div.innerHTML = '';
+  //       div.appendChild(p1);
+  //       div.appendChild(p2);
+  //       div.appendChild(ul);
+  //     });
+
+  //   });
+  // }, []);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <MainView></MainView>
   );
 }
