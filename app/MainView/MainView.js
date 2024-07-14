@@ -7,6 +7,7 @@ import { db } from '../firebase/firebase-config';
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
 import { useEffect } from "react";
+import Link from 'next/link';
 
 export default function MainView() {
 

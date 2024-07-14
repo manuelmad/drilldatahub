@@ -5,12 +5,22 @@
     grid-template-columns: 1fr 3fr 1fr;
     padding: 1rem;
 }
+.personal-logo-container {
+    text-align: center;
+    align-content: center;
+}
 
 .logo-container {
     text-align: center;
+    align-content: center;
 }
 
-.header img {
+.personal-logo-container img {
+    width: 13rem;
+    height: auto;
+}
+
+.logo-container img {
     width: 13rem;
     height: auto;
 }
