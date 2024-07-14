@@ -1,0 +1,16 @@
+.header {
+    background-color: var(--dark-background);
+    height: 15rem;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    padding: 1rem;
+}
+
+.logo-container {
+    text-align: center;
+}
+
+.header img {
+    width: 13rem;
+    height: auto;
+}

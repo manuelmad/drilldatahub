@@ -1,6 +1,7 @@
 'use client';
 
 import './MainView.css';
+import Header from '../Header/Header';
 
 import { db } from '../firebase/firebase-config';
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
@@ -25,12 +26,6 @@ export default function MainView() {
 
         collectionsArrayByField.forEach(col=> {
             
-            // Variable to determine if a field has events in some well
-            let wellsWithEvents = 0;
-
-            // Variable to count the wells checked in a field
-            let wellsChecked = 0;
-            
             // Create an article for each field, containing the name of that field
             const article = document.createElement('article');
             const h2 = document.createElement('h2');
@@ -40,7 +35,6 @@ export default function MainView() {
             
             // Create by default a paragraph saying there are no events
             const noEventsP = document.createElement('p');
-            // noEventsP.className = `no-events-${col.id}`;
             noEventsP.innerText = 'No hay eventos en este campo.';
             article.appendChild(noEventsP);
 
@@ -50,11 +44,7 @@ export default function MainView() {
                 const data = snapshot.docs;
 
                 // Checking if a well has events
-                data.forEach( async well=> {
-                    // Adding a well checked
-                    wellsChecked++;
-                    console.log(wellsChecked, data.length);
-                    
+                data.forEach( async well=> {                  
                     // Getting the ref for the events of a well
                     const newRef = collection(db, `${col.id}/${well.id}/eventos`);
 
@@ -67,10 +57,6 @@ export default function MainView() {
 
                         // As there are events in the field, removing the paragrpah that said the oposite
                         noEventsP.remove();
-
-                        // Adding a well with events
-                        wellsWithEvents++;
-                        console.log(wellsWithEvents);
 
                         // Inserting the name of the well that has events and inserting each event as a item of a list
                         const h3 = document.createElement('h3');
@@ -99,12 +85,15 @@ export default function MainView() {
     }, []);
 
     return(
-        <main>
-            <section>
-                <div id="events_container">
+        <>
+            <Header></Header>
+            <main>
+                <section>
+                    <div id="events_container">
 
-                </div>
-            </section>
-        </main>
+                    </div>
+                </section>
+            </main>
+        </>
     );
 }

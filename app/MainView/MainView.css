@@ -17,14 +17,20 @@
 
 #events_container h3 {
     margin-top: 2rem;
+    padding-left: 1rem;
 }
 
 #events_container article p {
     margin-top: 1rem;
+    padding-left: 1rem;
 }
 
 #events_container article ul {
     list-style: none;
+}
+
+#events_container article ul li {
+    cursor: pointer;
 }
 
 @media (min-width: 1060px) {
