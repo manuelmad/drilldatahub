@@ -12,6 +12,8 @@ html {
 :root {
   --white: #FFFFFF;
   --black: #000000;
+  --dark-background: #121212;
+  --yellow-rig: #f9eb4a;
   --ss: 1.2rem;
   --sm: 1.4rem;
   --md: 1.5rem;
@@ -22,4 +24,5 @@ html {
 main {
   min-height: 100vh;
   font-size: var(--md);
+  background-color: var(--dark-background);
 }

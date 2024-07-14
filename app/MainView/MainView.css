@@ -1,0 +1,34 @@
+#events_container {
+    width: 28rem;
+    margin: 0 auto;
+    padding-top: 4rem;
+}
+
+#events_container article:not(:first-child) {
+    margin-top: 4rem;
+}
+
+#events_container article {
+    color: var(--white);
+    border: 0.3rem solid var(--yellow-rig);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+#events_container h3 {
+    margin-top: 2rem;
+}
+
+#events_container article p {
+    margin-top: 1rem;
+}
+
+#events_container article ul {
+    list-style: none;
+}
+
+@media (min-width: 1060px) {
+    #events_container {
+        width: 80rem;
+    }
+}
