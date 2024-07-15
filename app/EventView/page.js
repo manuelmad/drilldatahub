@@ -7,7 +7,9 @@ export default function EventView() {
             <Header></Header>
             <main>
                 <section id='event-info_container'>
-
+                    <article>
+                        <p></p>
+                    </article>
                 </section>
             </main>
         </>

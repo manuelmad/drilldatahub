@@ -25,11 +25,12 @@
     padding-left: 1rem;
 }
 
-#events_container article ul {
-    list-style: none;
+#events_container article a {
+    text-decoration: none;
+    color: var(--white);
 }
 
-#events_container article ul li {
+#events_container article a {
     cursor: pointer;
 }
 

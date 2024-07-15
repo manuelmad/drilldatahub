@@ -7,7 +7,6 @@ import { db } from '../firebase/firebase-config';
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
 import { useEffect } from "react";
-import Link from 'next/link';
 
 export default function MainView() {
 
@@ -63,18 +62,17 @@ export default function MainView() {
                         const h3 = document.createElement('h3');
                         h3.innerText = `${well.id}`;
                         const p = document.createElement('p');
-                        const ul = document.createElement('ul');
                         events.docs.forEach(event => {
                             const eventInfo = event.data();
                             const dayi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getDate();
                             const monthi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getMonth();
                             const yeari = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getFullYear();
                             const eventTitle = `${eventInfo.Tipo} ${dayi}/${monthi}/${yeari}`;
-                            const li = document.createElement('li');
-                            li.innerText = eventTitle;
-                            ul.appendChild(li);
+                            const a = document.createElement('a');
+                            a.innerText = eventTitle;
+                            a.href = '/EventView';
+                            p.appendChild(a);
                         });
-                        p.appendChild(ul);
                         article.appendChild(h3);
                         article.appendChild(p);
                     } else {
