@@ -8,6 +8,8 @@ import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
 import { useEffect } from "react";
 
+// export let eventData = {};
+
 export default function MainView() {
 
     // Get all fields collections from firebase
@@ -71,7 +73,18 @@ export default function MainView() {
                             const a = document.createElement('a');
                             a.innerText = eventTitle;
                             a.href = '/EventView';
+                            let eventData = {
+                                'Fecha Inicial': `${dayi}/${monthi}/${yeari}`,
+                                'Fecha Final': `${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getDate()}/${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getMonth()}/${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getFullYear()}`,
+                                'Tipo': `${eventInfo.Tipo}`,
+                                'Subtipo': `${eventInfo.Subtipo}`
+                            }
+                            a.onclick = ()=>{
+                                localStorage.setItem('eventData', JSON.stringify(eventData));
+                                localStorage.setItem('reportsRef', `${col.id}/${well.id}/eventos/${event.id}`);
+                            };
                             p.appendChild(a);
+                            
                         });
                         article.appendChild(h3);
                         article.appendChild(p);

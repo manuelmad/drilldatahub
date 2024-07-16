@@ -1,0 +1,30 @@
+#event-info_container {
+    width: 28rem;
+    margin: 0 auto;
+    padding-top: 4rem;
+}
+
+#event-info_container article:not(:first-child) {
+    margin-top: 4rem;
+}
+
+#event-info_container article {
+    color: var(--white);
+    border: 0.3rem solid var(--yellow-rig);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+#event-info_container article p {
+    margin-top: 1rem;
+}
+
+#event-info_container article a {
+    display: block;
+}
+
+@media (min-width: 1060px) {
+    #event-info_container {
+        width: 80rem;
+    }
+}
