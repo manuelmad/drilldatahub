@@ -69,13 +69,17 @@ export default function MainView() {
                             const dayi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getDate();
                             const monthi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getMonth();
                             const yeari = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getFullYear();
-                            const eventTitle = `${eventInfo.Tipo} ${dayi}/${monthi}/${yeari}`;
+                            const eventTitle = `${eventInfo.Tipo} ${dayi}/${monthi+1}/${yeari}`;
                             const a = document.createElement('a');
                             a.innerText = eventTitle;
                             a.href = '/EventView';
                             let eventData = {
-                                'Fecha Inicial': `${dayi}/${monthi}/${yeari}`,
-                                'Fecha Final': `${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getDate()}/${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getMonth()}/${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getFullYear()}`,
+                                'Pozo': `${well.id}`,
+                                'Taladro': `${eventInfo['Taladro']}`,
+                                'Objetivo': `${eventInfo['Objetivo']}`,
+                                'Tiempo Estimado': `${eventInfo['Tiempo Estimado']}`,
+                                'Fecha Inicial': `${dayi}/${monthi+1}/${yeari}`,
+                                'Fecha Final': `${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getDate()}/${((new Date ((eventInfo['Fecha Final'].seconds)*1000)).getMonth())+1}/${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getFullYear()}`,
                                 'Tipo': `${eventInfo.Tipo}`,
                                 'Subtipo': `${eventInfo.Subtipo}`
                             }
