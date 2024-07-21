@@ -1,4 +1,4 @@
-#events_container {
+#events_container, #create-event-btn__container {
     width: 28rem;
     margin: 0 auto;
     padding-top: 4rem;
@@ -13,6 +13,27 @@
     border: 0.3rem solid var(--yellow-rig);
     border-radius: 0.5rem;
     padding: 1rem;
+}
+
+#create-event-btn__container {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+#create-event-btn__container button {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    background-color: var(--yellow-rig);
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+#create-event-btn__container button:active {
+    background-color: var(--dark-background);
+    border: 0.3rem solid var(--yellow-rig);
+    color: var(--white);
 }
 
 #events_container h3 {
@@ -34,8 +55,27 @@
     cursor: pointer;
 }
 
+.new-event__modal {
+    min-height: 10rem;
+    margin-top: 4rem;
+}
+
+.new-event__modal p {
+    text-align: center;
+    color: var(--white);
+}
+
+.new-event__modal label {
+    display: block;
+}
+
+.new-event__modal select {
+    width: 20rem;
+    height: 5rem;
+}
+
 @media (min-width: 1060px) {
-    #events_container {
+    #events_container, #create-event-btn__container {
         width: 80rem;
     }
 }

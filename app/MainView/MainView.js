@@ -6,11 +6,13 @@ import Header from '../Header/Header';
 import { db } from '../firebase/firebase-config';
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-// export let eventData = {};
+// import NewEventModal from '../NewEventModal/NewEventModal';
 
 export default function MainView() {
+
+    const [fieldNames, setFieldNames] = useState([]);
 
     // Get all fields collections from firebase
     const alpufCollection = collection(db, 'alpuf');
@@ -25,8 +27,23 @@ export default function MainView() {
     useEffect(()=> {
         const events_container = document.getElementById('events_container');
         events_container.innerHTML = '';
+        setFieldNames([]);
 
         collectionsArrayByField.forEach(col=> {
+            // Pushing field names in array
+            if(col.id == 'alturitas') {
+                fieldNames.push('Alturitas');
+            } else if(col.id == 'alpuf') {
+                fieldNames.push('Alpuf');
+            } else if(col.id == 'machiques') {
+                fieldNames.push('Machiques');
+            } else if(col.id == 'sanjose') {
+                fieldNames.push('San José');
+            } else if(col.id == 'sanjulian') {
+                fieldNames.push('San Julián');
+            }
+
+            console.log(fieldNames);
             
             // Create an article for each field, containing the name of that field
             const article = document.createElement('article');
@@ -98,6 +115,13 @@ export default function MainView() {
                 });
             });
         });
+        const field_select = document.getElementById('field_select');
+        field_select.innerHTML = '';
+        fieldNames.forEach(field => {
+            const option = document.createElement('option');
+            option.innerText = field;
+            field_select.appendChild(option);
+        })
     }, []);
 
     return(
@@ -107,6 +131,21 @@ export default function MainView() {
                 <section>
                     <div id="events_container">
 
+                    </div>
+                </section>
+                <section>
+                    <div id='create-event-btn__container'>
+                        <button id='create_event_btn'>CREAR NUEVO EVENTO</button>
+                    </div>
+                </section>
+                <section className='new-event__modal'>
+                    <div>
+                        <p>
+                            <label>Elija el campo:</label>
+                            <select id='field_select'>
+
+                            </select>
+                        </p>
                     </div>
                 </section>
             </main>
