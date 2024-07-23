@@ -1,18 +1,63 @@
-// 'use client';
+'use client';
 // import Image from "next/image";
 // import { useState } from "react";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged  } from "firebase/auth";
 
 import { db } from "./firebase/firebase-config";
+import Header from "./Header/Header";
 import MainView from "./MainView/MainView";
 import LoggedOutView from "./LoggedOutView/LoggedOutView";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   // const auth = getAuth();
-  // if(auth) {
-  //   return <MainView></MainView>
-  // } else {
-  //   return <LoggedOutView></LoggedOutView>
-  // }
-  return <LoggedOutView></LoggedOutView>
+  const [mainViewDisplay, setMainViewDisplay] = useState({display:'none'});
+  const [loggedOutViewDisplay, setLoggedOutViewDisplay] = useState({display:'block'});
+
+  const [loginHeaderButton, setLoginHeaderButton] = useState({display:'block'});
+  const [logoutHeaderButton, setLogoutHeaderButton] = useState({display:'none'});
+
+  useEffect(()=> {
+    // Check state of auth and display the correponding view
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setMainViewDisplay({display:"block"});
+        setLoggedOutViewDisplay({display:"none"});
+        setLoginHeaderButton({display:"none"});
+        setLogoutHeaderButton({display:"block"});
+      } else {
+        setMainViewDisplay({display:"none"});
+        setLoggedOutViewDisplay({display:"block"});
+        setLoginHeaderButton({display:"block"});
+        setLogoutHeaderButton({display:"none"});
+      }
+    })
+  }, []);
+  return (
+    <>
+      <Header
+        setMainViewDisplay={setMainViewDisplay}
+        setLoggedOutViewDisplay={setLoggedOutViewDisplay}
+
+        loginHeaderButton={loginHeaderButton}
+        logoutHeaderButton={logoutHeaderButton}
+
+        setLoginHeaderButton={setLoginHeaderButton}
+        setLogoutHeaderButton={setLogoutHeaderButton}
+      />
+      <MainView
+        mainViewDisplay={mainViewDisplay}
+        setMainViewDisplay={setMainViewDisplay}
+      />
+      <LoggedOutView
+        loggedOutViewDisplay={loggedOutViewDisplay}
+        setLoggedOutViewDisplay={setLoggedOutViewDisplay}
+
+        setMainViewDisplay={setMainViewDisplay}
+        setLoginHeaderButton={setLoginHeaderButton}
+        setLogoutHeaderButton={setLogoutHeaderButton}
+      />
+    </>
+  );
 }

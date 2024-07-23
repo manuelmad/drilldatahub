@@ -3,7 +3,13 @@ import './loggedOutView.css';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Header from '../Header/Header';
 
-export default function LoggedOutView() {
+export default function LoggedOutView({
+    setMainViewDisplay,
+    setLoggedOutViewDisplay,
+    loggedOutViewDisplay,
+    setLoginHeaderButton,
+    setLogoutHeaderButton
+}) {
 
     const logIn = ()=> {
         const auth = getAuth();
@@ -16,6 +22,10 @@ export default function LoggedOutView() {
             if(userCredential) {
                 const user = userCredential;
                 console.log('Bienvenido '+ email);
+                setMainViewDisplay({display:'block'});
+                setLoggedOutViewDisplay({display:'none'});
+                setLoginHeaderButton({display:'none'});
+                setLogoutHeaderButton({display:'block'});
             } else {
                 console.log('el usuario no está registrado');
             }
@@ -63,8 +73,8 @@ export default function LoggedOutView() {
 
     return (
         <>
-        <Header></Header>
-        <main>
+        {/* <Header></Header> */}
+        <main style={loggedOutViewDisplay}>
             <section className="logged-out-container">
                 <article>
                     <div className="company-logo-container">

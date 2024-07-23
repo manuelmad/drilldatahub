@@ -1,12 +1,17 @@
 .logged-out-container {
     width: 25rem;
     /* height: 100vh; */
-    min-height: calc(100vh - 25.3rem);
+    /* height: calc(100vh - 25.3rem); */
     margin: 0 auto;
     font-size: var(--xlg);
     padding: 4rem 0;
     display: flex;
     align-items: center;
+    color: var(--white);
+}
+
+.logged-out-container article {
+    width: 100%;
 }
 
 /* .company-logo-container img {
@@ -21,6 +26,7 @@
 .user-login-container p {
     margin-top: 1rem;
     align-content: center;
+    color: var(--yellow-rig);
 }
 
 .user-login-container input {
@@ -56,28 +62,25 @@
     left: 24.5rem;
 }
 
-.login-btn-container {
+.user-login-container .login-btn-container {
     text-align: center;
+    margin-top: 4rem;
 }
 
-/* #login_btn {
-    width: 15rem;
+.login-btn-container button {
+    width: 10rem;
     height: 4rem;
-    margin-top: 3rem;
     border-radius: 0.5rem;
-    background-color: var(--planeta-geek-celeste);
-    cursor: pointer;
-} */
-
-/* #login_btn:hover {
-    background-color: var(--planeta-geek-shadow-celeste);
+    border: 0.2rem solid var(--yellow-rig);
     color: var(--white);
+    background-color: var(--dark-background);
 }
 
-#login_btn:active {
-    background-color: var(--planeta-geek-green);
+.login-btn-container button:active {
+    border: 0.2rem solid var(--yellow-rig);
     color: var(--black);
-} */
+    background-color: var(--yellow-rig);
+} 
 
 @media (min-width: 700px) {
     .logged-out-container {
@@ -90,5 +93,10 @@
     
     .bi-eye-slash {
         left: 30rem;
+    }
+
+    .login-btn-container button {
+        width: 13rem;
+        height: 5rem;
     }
 }

@@ -8,7 +8,9 @@ import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
 import { useEffect, useState } from "react";
 
-export default function MainView() {
+export default function MainView({
+    mainViewDisplay
+}) {
 
     const [newEventModalDisplay, setNewEventModalDisplay] = useState({display: 'none'});
 
@@ -195,8 +197,8 @@ export default function MainView() {
 
     return(
         <>
-            <Header></Header>
-            <main>
+            {/* <Header></Header> */}
+            <main style={mainViewDisplay}>
                 <section>
                     <div id="events_container">
 

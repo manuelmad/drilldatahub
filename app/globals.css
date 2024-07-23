@@ -22,6 +22,11 @@ html {
   --xlg: 2.2rem;
 }
 
+body {
+  min-height: 100vh;
+  background-color: var(--dark-background);
+}
+
 main {
   /* min-height: 100vh; */
   font-size: var(--md);
