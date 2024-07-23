@@ -27,11 +27,15 @@ export default function MainView() {
         setNewEventModalDisplay({display: 'block'});
         // Code to scroll to the position of the modal
         const element = document.querySelector('.new-event__modal');
-        const offset = 400;
+        const offset = 300;
         const bodyRect = document.body.getBoundingClientRect().top;
+        console.log(bodyRect);
         const elementRect = element.getBoundingClientRect().top;
+        console.log(elementRect);
         const elementPosition = elementRect - bodyRect;
+        console.log(elementPosition);
         const offsetPosition = elementPosition + offset;
+        console.log(offsetPosition);
         // A little delay while the section is shown and able to go there
         setTimeout(()=> {
             window.scrollTo({

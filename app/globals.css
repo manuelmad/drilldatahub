@@ -23,7 +23,7 @@ html {
 }
 
 main {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   font-size: var(--md);
   background-color: var(--dark-background);
   padding: 4rem 0 4rem;

@@ -1,25 +1,18 @@
 // 'use client';
 // import Image from "next/image";
 // import { useState } from "react";
+import { getAuth } from "firebase/auth";
 
+import { db } from "./firebase/firebase-config";
 import MainView from "./MainView/MainView";
+import LoggedOutView from "./LoggedOutView/LoggedOutView";
 
 export default function Home() {
-  // const [eventInit, setEventInit] = useState('');
-  // const [eventFinal, setEventFinal] = useState('');
-  // const [eventType, setEventType] = useState('');
-  // const [eventSubtype, setEventSubtype] = useState('');
-
-  return (
-    <MainView
-      // eventInit={eventInit}
-      // setEventInit={setEventInit}
-      // eventFinal={eventFinal}
-      // setEventFinal={setEventFinal}
-      // eventType={eventType}
-      // setEventType={setEventType}
-      // eventSubtype={eventSubtype}
-      // setEventSubtype={setEventSubtype}
-    />
-  );
+  // const auth = getAuth();
+  // if(auth) {
+  //   return <MainView></MainView>
+  // } else {
+  //   return <LoggedOutView></LoggedOutView>
+  // }
+  return <LoggedOutView></LoggedOutView>
 }
