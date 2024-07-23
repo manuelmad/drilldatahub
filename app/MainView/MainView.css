@@ -1,18 +1,21 @@
-#events_container, #create-event-btn__container {
+#events_container, #create-event-btn__container, .new-event__modal {
     width: 28rem;
     margin: 0 auto;
     padding-top: 4rem;
+    border-top: 0.15rem solid var(--light-gray);
 }
 
 #events_container article:not(:first-child) {
     margin-top: 4rem;
 }
 
-#events_container article {
+#events_container article, .new-event__modal {
     color: var(--white);
     border: 0.3rem solid var(--yellow-rig);
     border-radius: 0.5rem;
     padding: 1rem;
+    width: 25rem;
+    margin: 0 auto;
 }
 
 #create-event-btn__container {
@@ -20,7 +23,11 @@
     margin-top: 4rem;
 }
 
-#create-event-btn__container button {
+#cancel-event-btn__container {
+    margin-top: 4rem;
+}
+
+#create_event_btn, #cancel_event_btn {
     width: 20rem;
     height: 5rem;
     font-size: var(--md);
@@ -30,7 +37,7 @@
     cursor: pointer;
 }
 
-#create-event-btn__container button:active {
+#create_event_btn:active, #cancel_event_btn:active {
     background-color: var(--dark-background);
     border: 0.3rem solid var(--yellow-rig);
     color: var(--white);
@@ -63,6 +70,7 @@
 .new-event__modal p {
     text-align: center;
     color: var(--white);
+    margin-top: 1rem;
 }
 
 .new-event__modal label {
@@ -74,8 +82,16 @@
     height: 5rem;
 }
 
+#field_select, #well_select {
+    font-size: var(--md);
+}
+
 @media (min-width: 1060px) {
-    #events_container, #create-event-btn__container {
+    #events_container, #create-event-btn__container, .new-event__modal {
         width: 80rem;
+    }
+
+    #events_container article, .new-event__modal {
+        width: 70rem;
     }
 }

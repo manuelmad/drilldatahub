@@ -8,11 +8,9 @@ import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
 import { useEffect, useState } from "react";
 
-// import NewEventModal from '../NewEventModal/NewEventModal';
-
 export default function MainView() {
 
-    const [fieldNames, setFieldNames] = useState([]);
+    const [newEventModalDisplay, setNewEventModalDisplay] = useState({display: 'none'});
 
     // Get all fields collections from firebase
     const alpufCollection = collection(db, 'alpuf');
@@ -24,34 +22,94 @@ export default function MainView() {
     // Array containing all collections
     const collectionsArrayByField = [alpufCollection, alturitasCollection, machiquesCollection, sanjoseCollection, sanjulianCollection];
 
+    // Function to show new Event Modal
+    const showNewEventModal = ()=> {
+        setNewEventModalDisplay({display: 'block'});
+    }
+
+    // Function to hide new Event Modal
+    const hideNewEventModal = ()=> {
+        setNewEventModalDisplay({display: 'none'});
+    }
+
+    const showWellsField = async (e) => {
+        // Clearing wells select
+        const well_select = document.getElementById('well_select');
+        well_select.innerHTML = '';
+        // Getting the corresponding collection id
+        const col_id = e.target.value
+        if(col_id === '--------') {
+            return;
+        }
+        const col = collection(db, col_id);
+
+        // Getting the docs of the collection
+        const ref = await getDocs(col);
+        const well = ref.docs;
+
+        // Adding an option in the wells select for each well in the collection
+        well.forEach(well => {
+            const well_option = document.createElement('option');
+            well_option.innerText = well.id;
+            well_option.value = well.id;
+            well_select.appendChild(well_option);
+        })
+    }
+
     useEffect(()=> {
+        // Clearing events
         const events_container = document.getElementById('events_container');
         events_container.innerHTML = '';
-        setFieldNames([]);
+
+        // Clearing fields select
+        const field_select = document.getElementById('field_select');
+        field_select.innerHTML = '';
+        const void_option = document.createElement('option');
+        void_option.innerText = '--------';
+        void_option.value = '--------';
+        field_select.appendChild(void_option);
 
         collectionsArrayByField.forEach(col=> {
             // Pushing field names in array
             if(col.id == 'alturitas') {
-                fieldNames.push('Alturitas');
+                // Adding an option in field select
+                const option = document.createElement('option');
+                option.innerText = 'Alturitas';
+                option.value = col.id;
+                field_select.appendChild(option);
             } else if(col.id == 'alpuf') {
-                fieldNames.push('Alpuf');
+                // Adding an option in field select
+                const option = document.createElement('option');
+                option.innerText = 'Alpuf';
+                option.value = col.id;
+                field_select.appendChild(option);
             } else if(col.id == 'machiques') {
-                fieldNames.push('Machiques');
+                // Adding an option in field select
+                const option = document.createElement('option');
+                option.innerText = 'Machiques';
+                option.value = col.id;
+                field_select.appendChild(option);
             } else if(col.id == 'sanjose') {
-                fieldNames.push('San José');
+                // Adding an option in field select
+                const option = document.createElement('option');
+                option.innerText = 'San José';
+                option.value = col.id;
+                field_select.appendChild(option);
             } else if(col.id == 'sanjulian') {
-                fieldNames.push('San Julián');
+                // Adding an option in field select
+                const option = document.createElement('option');
+                option.innerText = 'San Julián';
+                option.value = col.id;
+                field_select.appendChild(option);
             }
 
-            console.log(fieldNames);
-            
             // Create an article for each field, containing the name of that field
             const article = document.createElement('article');
             const h2 = document.createElement('h2');
             h2.innerText = `${col.id == 'alturitas' ? 'Alturitas' : col.id == 'alpuf' ? 'Alpuf' : col.id == 'machiques' ? 'Machiques' : col.id == 'sanjose' ? 'San José' : col.id == 'sanjulian' ? 'San Julián' : ''}`;
             article.appendChild(h2);
             events_container.appendChild(article);
-            
+
             // Create by default a paragraph saying there are no events
             const noEventsP = document.createElement('p');
             noEventsP.innerText = 'No hay eventos en este campo.';
@@ -63,7 +121,7 @@ export default function MainView() {
                 const data = snapshot.docs;
 
                 // Checking if a well has events
-                data.forEach( async well=> {                  
+                data.forEach( async well=> {
                     // Getting the ref for the events of a well
                     const newRef = collection(db, `${col.id}/${well.id}/eventos`);
 
@@ -105,7 +163,7 @@ export default function MainView() {
                                 localStorage.setItem('reportsRef', `${col.id}/${well.id}/eventos/${event.id}`);
                             };
                             p.appendChild(a);
-                            
+
                         });
                         article.appendChild(h3);
                         article.appendChild(p);
@@ -115,13 +173,6 @@ export default function MainView() {
                 });
             });
         });
-        const field_select = document.getElementById('field_select');
-        field_select.innerHTML = '';
-        fieldNames.forEach(field => {
-            const option = document.createElement('option');
-            option.innerText = field;
-            field_select.appendChild(option);
-        })
     }, []);
 
     return(
@@ -135,16 +186,25 @@ export default function MainView() {
                 </section>
                 <section>
                     <div id='create-event-btn__container'>
-                        <button id='create_event_btn'>CREAR NUEVO EVENTO</button>
+                        <button onClick={showNewEventModal} id='create_event_btn'>CREAR NUEVO EVENTO</button>
                     </div>
                 </section>
-                <section className='new-event__modal'>
-                    <div>
+                <section style={newEventModalDisplay}>
+                    <div className='new-event__modal'>
                         <p>
                             <label>Elija el campo:</label>
-                            <select id='field_select'>
+                            <select onChange={showWellsField} id='field_select'>
 
                             </select>
+                        </p>
+                        <p>
+                            <label>Elija un pozo:</label>
+                            <select id='well_select'>
+
+                            </select>
+                        </p>
+                        <p id='cancel-event-btn__container'>
+                            <button onClick={hideNewEventModal} id='cancel_event_btn'>CANCELAR</button>
                         </p>
                     </div>
                 </section>

@@ -21,7 +21,9 @@ export default function Header() {
                     alt='DDH logo'
                 />
             </div>
-            <div></div>
+            <div className='login-btn__container'>
+                <button id='login_btn'>Log In</button>
+            </div>
         </header>
     );
 }
