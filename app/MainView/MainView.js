@@ -25,6 +25,20 @@ export default function MainView() {
     // Function to show new Event Modal
     const showNewEventModal = ()=> {
         setNewEventModalDisplay({display: 'block'});
+        // Code to scroll to the position of the modal
+        const element = document.querySelector('.new-event__modal');
+        const offset = 400;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition + offset;
+        // A little delay while the section is shown and able to go there
+        setTimeout(()=> {
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }, 500);
     }
 
     // Function to hide new Event Modal

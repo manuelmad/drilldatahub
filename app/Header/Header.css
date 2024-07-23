@@ -1,9 +1,8 @@
 .header {
     background-color: var(--dark-background);
-    min-height: 15rem;
+    /* min-height: 15rem; */
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-auto-rows: minmax(10rem, auto);
     padding: 1rem;
 }
 
@@ -31,6 +30,7 @@
     text-align: center;
     grid-column: 1 / 3;
     align-content: center;
+    line-height: 10rem;
 }
 
 #login_btn {
@@ -51,5 +51,14 @@
 @media (min-width: 1060px) {
     .header {
         grid-template-columns: 1fr 3fr 1fr;
+    }
+
+    .login-btn__container {
+        grid-column: 3 / 4;
+    }
+
+    #login_btn {
+        width: 13rem;
+        height: 5rem;
     }
 }
