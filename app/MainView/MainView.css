@@ -27,7 +27,7 @@
     margin-top: 4rem;
 }
 
-#create_event_btn, #cancel_event_btn {
+#create_event_btn {
     width: 20rem;
     height: 5rem;
     font-size: var(--md);
@@ -37,10 +37,28 @@
     cursor: pointer;
 }
 
-#create_event_btn:active, #cancel_event_btn:active {
+#create_event_btn:active {
     background-color: var(--dark-background);
     border: 0.3rem solid var(--yellow-rig);
     color: var(--white);
+}
+
+#cancel_event_btn {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--yellow-rig);
+    color: var(--white);
+    background-color: var(--dark-background);
+    cursor: pointer;
+}
+
+#cancel_event_btn:active {
+    background-color: var(--yellow-rig);
+    border: 0.3rem solid var(--dark-background);
+    color: var(--black);
 }
 
 #events_container h3 {

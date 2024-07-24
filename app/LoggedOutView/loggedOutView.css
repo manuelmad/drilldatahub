@@ -1,7 +1,7 @@
 .logged-out-container {
     width: 25rem;
     /* height: 100vh; */
-    /* height: calc(100vh - 25.3rem); */
+    height: calc(100vh - 15.3rem);
     margin: 0 auto;
     font-size: var(--xlg);
     padding: 4rem 0;
@@ -74,6 +74,8 @@
     border: 0.2rem solid var(--yellow-rig);
     color: var(--white);
     background-color: var(--dark-background);
+    cursor: pointer;
+    font-size: var(--md);
 }
 
 .login-btn-container button:active {

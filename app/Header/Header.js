@@ -11,12 +11,16 @@ export default function Header({
     setLoginHeaderButton,
     setLogoutHeaderButton
 }) {
-    const auth = getAuth();
 
     const logIn = ()=> {
         const auth = getAuth();
         const email = document.getElementById('user_email').value;
         const password = document.getElementById('user_password').value;
+
+        if(email === '' || password === '') {
+            alert('Por favor, ingrese correo electrónico y contraseña.');
+            return;
+        }
     
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -29,13 +33,18 @@ export default function Header({
                 setLoginHeaderButton({display:'none'});
                 setLogoutHeaderButton({display:'block'});
             } else {
-                console.log('el usuario no está registrado');
+                //console.log('el usuario no está registrado');
             }
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
+            if(errorCode == 'auth/invalid-email') {
+                alert('Correo electrónico inválido.');
+            } else if(errorCode === 'auth/invalid-credential') {
+                alert('Contraseña incorrecta.');
+            }
         });
     }
 

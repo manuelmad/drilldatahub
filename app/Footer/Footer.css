@@ -1,0 +1,36 @@
+footer {
+	font-size: var(--lg);
+	margin-top: 8rem;
+	padding: 2rem 1rem 4rem;
+	background-color: var(--dark-background);
+	color: var(--black);
+	text-align: center;
+    font-weight: bold;
+}
+
+footer section {
+    width: 28rem;
+    margin: 0 auto;
+    border-top: 0.15rem solid var(--light-gray);
+    padding: 4rem 0;
+}
+
+footer p {
+	margin-top: 2rem;
+    color: var(--light-gray);
+}
+
+.first-p, .third-p {
+	text-transform: uppercase;
+    color: var(--yellow-rig);
+}
+
+.second-p {
+	margin-top: 3rem;
+}
+
+@media (min-width: 1060px) {
+    footer section {
+        width: 80rem;
+    }
+}

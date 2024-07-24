@@ -1,6 +1,5 @@
 'use client';
 // import Image from "next/image";
-// import { useState } from "react";
 import { getAuth, onAuthStateChanged  } from "firebase/auth";
 
 import { db } from "./firebase/firebase-config";
@@ -8,6 +7,7 @@ import Header from "./Header/Header";
 import MainView from "./MainView/MainView";
 import LoggedOutView from "./LoggedOutView/LoggedOutView";
 import { useEffect, useState } from "react";
+import Footer from "./Footer/Footer";
 
 export default function Home() {
   // const auth = getAuth();
@@ -58,6 +58,7 @@ export default function Home() {
         setLoginHeaderButton={setLoginHeaderButton}
         setLogoutHeaderButton={setLogoutHeaderButton}
       />
+      <Footer />
     </>
   );
 }

@@ -14,7 +14,8 @@ html {
   --black: #000000;
   --dark-background: #121212;
   --yellow-rig: #f9eb4a;
-  --light-gray: rgb(188, 188, 188);
+  --light-gray: #bcbcbc;
+  --sky-blue: #4a58f9;
   --ss: 1.2rem;
   --sm: 1.4rem;
   --md: 1.5rem;
@@ -31,5 +32,5 @@ main {
   /* min-height: 100vh; */
   font-size: var(--md);
   background-color: var(--dark-background);
-  padding: 4rem 0 4rem;
+  /* padding: 4rem 0 4rem; */
 }
