@@ -86,22 +86,39 @@
 }
 
 .new-event__modal p {
-    text-align: center;
+    /* text-align: center; */
     color: var(--white);
-    margin-top: 1rem;
+    margin: 1rem auto 0;
+    width: 20rem;
 }
 
 .new-event__modal label {
     display: block;
+    margin-top: 4rem;
 }
 
 .new-event__modal select {
-    width: 20rem;
+    /* width: 20rem; */
     height: 5rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.new-event__modal input {
+    height: 5rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    font-size: var(--md);
 }
 
 #field_select, #well_select {
     font-size: var(--md);
+}
+
+#cancel-event-btn__container {
+    text-align: center;
 }
 
 @media (min-width: 1060px) {
@@ -111,5 +128,9 @@
 
     #events_container article, .new-event__modal {
         width: 70rem;
+    }
+
+    .new-event__modal p {
+        width: 40rem;
     }
 }
