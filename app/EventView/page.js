@@ -26,7 +26,7 @@ export default function EventView() {
         const p1 = document.createElement('p');
         p1.innerHTML = `Fecha inicial: ${eventInStorage['Fecha Inicial']}.`;
         const p2 = document.createElement('p');
-        p2.innerHTML = `Fecha final: ${eventInStorage['Fecha Final']}.`;
+        p2.innerHTML = `Fecha final: ${eventInStorage['Fecha Final'] === '31/12/1969' ? '---' : eventInStorage['Fecha Final']}.`;
         const p3 = document.createElement('p');
         p3.innerHTML = `Tipo de evento: ${eventInStorage.Tipo}.`;
         const p4 = document.createElement('p');

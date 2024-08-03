@@ -1,4 +1,6 @@
 import './NewEventModal.css';
+import { db } from '../firebase/firebase-config';
+import { collection, getDocs, addDoc, Timestamp } from "firebase/firestore";
 
  // Array containing all event types
  const event_types = [
@@ -44,7 +46,7 @@ export default function NewEventModal ({
 
         // Getting the docs of the collection
         const ref = await getDocs(col);
-        const well = ref.docs;
+        const wells = ref.docs;
 
         const well_deafult_option = document.createElement('option');
         well_deafult_option.innerText = '--------';
@@ -52,7 +54,7 @@ export default function NewEventModal ({
         well_select.appendChild(well_deafult_option);
 
         // Adding an option in the wells select for each well in the collection
-        well.forEach(well => {
+        wells.forEach(well => {
             const well_option = document.createElement('option');
             well_option.innerText = well.id;
             well_option.value = well.id;
@@ -72,7 +74,38 @@ export default function NewEventModal ({
             subtype_option.value = subtype;
             event_subtype_select.appendChild(subtype_option);
         });
+    }
 
+    // Function to create a new event at firebase db
+    const createEvent = async () => {
+        // Getting all values
+        const field_name = document.getElementById('field_select').value;
+        const well_name = document.getElementById('well_select').value;
+        const event_type = document.getElementById('event_type_select').value;
+        const event_subtype = document.getElementById('event_subtype_select').value;
+        const formation_name = document.getElementById('goal_formation').value;
+        const rig_name = document.getElementById('rig_name').value;
+        const init_date = document.getElementById('init_date').value;
+        const estimated_time = document.getElementById('estimated_time').value;
+
+        console.log(field_name, well_name, event_type, event_subtype, formation_name, rig_name, init_date, estimated_time);
+        // Creating the 'eventos' collection and its reference
+        const eventsCollectionRef = collection(db, `${field_name}/${well_name}/eventos`);
+
+        // Creating a new Doc in the eventos conllection, with an automatic id (addDoc)
+        await addDoc(eventsCollectionRef, {
+            'Tipo': event_type,
+            'Subtipo': event_subtype,
+            'Objetivo': formation_name,
+            'Taladro': rig_name,
+            'Fecha Inicial':{
+                seconds: (new Date(init_date).getTime())/1000
+            },
+            'Fecha Final':{
+                seconds: 0 // Giving a default value because the end of the event is unknown
+            },
+            'Tiempo Estimado': Number(estimated_time)
+        });
     }
 
     return(
@@ -118,15 +151,18 @@ export default function NewEventModal ({
             </p>
             <p>
                 <label htmlFor='init_date'>Indique la FECHA DE INICIO del evento:</label>
-                <input id='init_date'>
+                <input id='init_date' type='datetime-local'>
 
                 </input>
             </p>
             <p>
-                <label htmlFor='estimated_time'>Indique el TIEMPO ESTIMADO del evento:</label>
+                <label htmlFor='estimated_time'>Indique el TIEMPO ESTIMADO del evento (días):</label>
                 <input id='estimated_time' type='number'>
 
                 </input>
+            </p>
+            <p id='new-event__container'>
+                <button onClick={createEvent} id='new_event'>CREAR EVENTO</button>
             </p>
             <p id='cancel-event-btn__container'>
                 <button onClick={hideNewEventModal} id='cancel_event_btn'>CANCELAR</button>

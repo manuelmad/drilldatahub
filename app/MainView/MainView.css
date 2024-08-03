@@ -1,4 +1,4 @@
-#events_container, #create-event-btn__container, .new-event__modal {
+#events_container, #create-event-btn__container {
     width: 28rem;
     margin: 0 auto;
     padding-top: 4rem;
@@ -9,7 +9,7 @@
     margin-top: 4rem;
 }
 
-#events_container article, .new-event__modal {
+#events_container article {
     color: var(--white);
     border: 0.3rem solid var(--yellow-rig);
     border-radius: 0.5rem;
@@ -20,10 +20,6 @@
 
 #create-event-btn__container {
     text-align: center;
-    margin-top: 4rem;
-}
-
-#cancel-event-btn__container {
     margin-top: 4rem;
 }
 
@@ -43,24 +39,6 @@
     color: var(--white);
 }
 
-#cancel_event_btn {
-    width: 20rem;
-    height: 5rem;
-    font-size: var(--md);
-    font-weight: bold;
-    border-radius: 0.5rem;
-    border: 0.2rem solid var(--yellow-rig);
-    color: var(--white);
-    background-color: var(--dark-background);
-    cursor: pointer;
-}
-
-#cancel_event_btn:active {
-    background-color: var(--yellow-rig);
-    border: 0.3rem solid var(--dark-background);
-    color: var(--black);
-}
-
 #events_container h3 {
     margin-top: 2rem;
     padding-left: 1rem;
@@ -74,6 +52,7 @@
 #events_container article a {
     text-decoration: none;
     color: var(--white);
+    display: block;
 }
 
 #events_container article a {
@@ -81,15 +60,11 @@
 }
 
 @media (min-width: 1060px) {
-    #events_container, #create-event-btn__container, .new-event__modal {
+    #events_container, #create-event-btn__container {
         width: 80rem;
     }
 
-    #events_container article, .new-event__modal {
+    #events_container article {
         width: 70rem;
-    }
-
-    .new-event__modal p {
-        width: 40rem;
     }
 }

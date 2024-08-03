@@ -1,10 +1,14 @@
 .new-event__modal {
+    width: 28rem;
     min-height: 10rem;
-    margin-top: 4rem;
+    color: var(--white);
+    border: 0.3rem solid var(--yellow-rig);
+    border-radius: 0.5rem;
+    padding: 4rem 1rem;
+    margin: 4rem auto 0;
 }
 
 .new-event__modal p {
-    /* text-align: center; */
     color: var(--white);
     margin: 1rem auto 0;
     width: 20rem;
@@ -16,7 +20,6 @@
 }
 
 .new-event__modal select {
-    /* width: 20rem; */
     height: 5rem;
     width: 100%;
     margin-top: 1rem;
@@ -35,8 +38,48 @@
     font-size: var(--md);
 }
 
+#new-event__container {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+#new_event {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    background-color: var(--yellow-rig);
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+#new_event:active {
+    background-color: var(--dark-background);
+    border: 0.3rem solid var(--yellow-rig);
+    color: var(--white);
+}
+
 #cancel-event-btn__container {
     text-align: center;
+    margin-top: 4rem;
+}
+
+#cancel_event_btn {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--yellow-rig);
+    color: var(--white);
+    background-color: var(--dark-background);
+    cursor: pointer;
+}
+
+#cancel_event_btn:active {
+    background-color: var(--yellow-rig);
+    border: 0.3rem solid var(--dark-background);
+    color: var(--black);
 }
 
 @media (min-width: 1060px) {

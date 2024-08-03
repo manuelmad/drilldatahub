@@ -29,7 +29,7 @@ export default function MainView ({
         setNewEventModalDisplay({display: 'block'});
         // Code to scroll to the position of the modal
         const element = document.querySelector('.new-event__modal');
-        const offset = 650;
+        const offset = 600;
         const bodyRect = document.body.getBoundingClientRect().top;
         // console.log(bodyRect);
         const elementRect = element.getBoundingClientRect().top;
@@ -176,7 +176,7 @@ export default function MainView ({
                 </section>
                 <section>
                     <div id='create-event-btn__container'>
-                        <button onClick={showNewEventModal} id='create_event_btn'>CREAR NUEVO EVENTO</button>
+                        <button onClick={showNewEventModal} id='create_event_btn'>NUEVO EVENTO</button>
                     </div>
                 </section>
                 <NewEventModal
