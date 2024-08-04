@@ -86,9 +86,51 @@ export default function NewEventModal ({
         const formation_name = document.getElementById('goal_formation').value;
         const rig_name = document.getElementById('rig_name').value;
         const init_date = document.getElementById('init_date').value;
+        const final_date = document.getElementById('final_date').value;
         const estimated_time = document.getElementById('estimated_time').value;
 
-        console.log(field_name, well_name, event_type, event_subtype, formation_name, rig_name, init_date, estimated_time);
+        // Stablishing conditions so the user HAS to fill all the fields.
+        if(field_name === '--------') {
+            alert('Por favor, seleccione un campo del bloque DZO.');
+            return;
+        }
+
+        if(well_name === '--------') {
+            alert(`Por favor, seleccione un pozo del campo ${document.getElementById('field_select').value}.`);
+            return;
+        }
+
+        if(event_type === '--------' || event_subtype === '--------') {
+            alert(`Por favor, seleccione un tipo y subtipo de evento. Esto podrá ser modificado luego en caso de errores.`);
+            return;
+        }
+
+        if(formation_name === '') {
+            alert(`Por favor, ingrese el nombre de la formación objetivo del evento. Esto podrá ser modificado luego en caso de errores.`);
+            return;
+        }
+
+        if(formation_name === '') {
+            alert(`Por favor, ingrese el nombre de la formación objetivo del evento. Esto podrá ser modificado luego en caso de errores.`);
+            return;
+        }
+
+        if(rig_name === '') {
+            alert(`Por favor, ingrese el nombre del equipo / taladro con que se ejecutan las operaciones del evento. Esto podrá ser modificado luego en caso de errores.`);
+            return;
+        }
+
+        if(isNaN(new Date(init_date).getTime())) {
+            alert(`Por favor, ingrese una fecha inicial válida para el evento. Esto podrá ser modificado luego en caso de errores.`);
+            return;
+        }
+
+        if(Number(estimated_time) === 0) {
+            alert(`Por favor, ingrese un tiempo estimado para el evento. Esto podrá ser modificado luego en caso de errores.`);
+            return;
+        }
+
+        //console.log(field_name, well_name, event_type, event_subtype, formation_name, rig_name, init_date, estimated_time);
         // Creating the 'eventos' collection and its reference
         const eventsCollectionRef = collection(db, `${field_name}/${well_name}/eventos`);
 
@@ -102,10 +144,11 @@ export default function NewEventModal ({
                 seconds: (new Date(init_date).getTime())/1000
             },
             'Fecha Final':{
-                seconds: 0 // Giving a default value because the end of the event is unknown
+                seconds: (new Date(final_date).getTime())/1000
             },
             'Tiempo Estimado': Number(estimated_time)
         });
+        window.location.reload(); // I can't find a better way to update the list of events at 'events_container'
     }
 
     return(
@@ -152,6 +195,12 @@ export default function NewEventModal ({
             <p>
                 <label htmlFor='init_date'>Indique la FECHA DE INICIO del evento:</label>
                 <input id='init_date' type='datetime-local'>
+
+                </input>
+            </p>
+            <p>
+                <label htmlFor='init_date'>Indique la FECHA FINAL del evento:</label>
+                <input id='final_date' type='datetime-local'>
 
                 </input>
             </p>

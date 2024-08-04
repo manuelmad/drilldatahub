@@ -29,7 +29,7 @@ export default function MainView ({
         setNewEventModalDisplay({display: 'block'});
         // Code to scroll to the position of the modal
         const element = document.querySelector('.new-event__modal');
-        const offset = 600;
+        const offset = 300;
         const bodyRect = document.body.getBoundingClientRect().top;
         // console.log(bodyRect);
         const elementRect = element.getBoundingClientRect().top;
@@ -126,7 +126,7 @@ export default function MainView ({
                         // As there are events in the field, removing the paragrpah that said the oposite
                         noEventsP.remove();
 
-                        // Inserting the name of the well that has events and inserting each event as a item of a list
+                        // Inserting the name of the well that has events and inserting each event as an item of a list
                         const h3 = document.createElement('h3');
                         h3.innerText = `${well.id}`;
                         const p = document.createElement('p');

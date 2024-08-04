@@ -27,7 +27,7 @@ export default function Header({
             // Logged in
             if(userCredential) {
                 const user = userCredential;
-                console.log('Bienvenido '+ email);
+                //console.log('Bienvenido '+ email);
                 setMainViewDisplay({display:'block'});
                 setLoggedOutViewDisplay({display:'none'});
                 setLoginHeaderButton({display:'none'});
@@ -39,7 +39,7 @@ export default function Header({
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+            //console.log(errorCode, errorMessage);
             if(errorCode == 'auth/invalid-email') {
                 alert('Correo electrónico inválido.');
             } else if(errorCode === 'auth/invalid-credential') {
