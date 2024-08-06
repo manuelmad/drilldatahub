@@ -1,17 +1,26 @@
+'use client';
 import './Header.css';
 
 import Image from "next/image";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import Link from 'next/link';
+import { useContext } from 'react';
+import { HeaderContext } from '../context/context';
 
-export default function Header({
+export default function Header(/*{
     setMainViewDisplay,
     setLoggedOutViewDisplay,
     loginHeaderButton,
     logoutHeaderButton,
     setLoginHeaderButton,
     setLogoutHeaderButton
-}) {
+}*/) {
+    let { setMainViewDisplay, setLoggedOutViewDisplay, loginHeaderButton, logoutHeaderButton, setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
+    // let { setLoggedOutViewDisplay } = useContext(HeaderContext);
+    // let { loginHeaderButton } = useContext(HeaderContext);
+    // let { logoutHeaderButton } = useContext(HeaderContext);
+    // let { setLoginHeaderButton } = useContext(HeaderContext);
+    // let { setLogoutHeaderButton } = useContext(HeaderContext);
 
     const logIn = ()=> {
         const auth = getAuth();

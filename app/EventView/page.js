@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 
 import { db } from '../firebase/firebase-config';
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
+import Context from '../context/context';
 
 export default function EventView({}) {
 
@@ -164,7 +165,9 @@ export default function EventView({}) {
     
     return(
         <>
-            <Header />
+            {/* <Context> */}
+                <Header />
+            {/* </Context> */}
             <main>
                 <section id='event-info_container'>
                     {/* <article>

@@ -6,8 +6,11 @@ import { db } from "./firebase/firebase-config";
 import Header from "./Header/Header";
 import MainView from "./MainView/MainView";
 import LoggedOutView from "./LoggedOutView/LoggedOutView";
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext, useContext } from "react";
 import Footer from "./Footer/Footer";
+import Context from "./context/context";
+
+//export const HeaderContext = createContext();
 
 export default function Home() {
   // const auth = getAuth();
@@ -36,7 +39,10 @@ export default function Home() {
   }, []);
   return (
     <>
-      <Header
+    <Context>
+      <Header />
+    </Context>
+      {/* <Header
         setMainViewDisplay={setMainViewDisplay}
         setLoggedOutViewDisplay={setLoggedOutViewDisplay}
 
@@ -45,7 +51,7 @@ export default function Home() {
 
         setLoginHeaderButton={setLoginHeaderButton}
         setLogoutHeaderButton={setLogoutHeaderButton}
-      />
+      /> */}
       <MainView
         mainViewDisplay={mainViewDisplay}
         setMainViewDisplay={setMainViewDisplay}
