@@ -2,12 +2,13 @@
 
 import './EventView.css';
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import { useEffect } from 'react';
 
 import { db } from '../firebase/firebase-config';
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
-export default function EventView() {
+export default function EventView({}) {
 
     // const event_info_container = document.getElementById('event-info_container');
 
@@ -163,7 +164,7 @@ export default function EventView() {
     
     return(
         <>
-            <Header></Header>
+            <Header />
             <main>
                 <section id='event-info_container'>
                     {/* <article>
@@ -175,6 +176,7 @@ export default function EventView() {
                 </section>
                 <section id='current-report__container'></section>
             </main>
+            <Footer />
         </>
     );
 }

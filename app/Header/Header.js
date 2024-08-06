@@ -2,6 +2,7 @@ import './Header.css';
 
 import Image from "next/image";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import Link from 'next/link';
 
 export default function Header({
     setMainViewDisplay,
@@ -82,7 +83,10 @@ export default function Header({
                 />
             </div>
             <div className='buttons__container'>
-                <button id='login_btn_header' onClick={logIn} style={loginHeaderButton}>Log In</button><button id='logout_btn_header' onClick={logOut} style={logoutHeaderButton}>Log Out</button>
+                <button id='login_btn_header' onClick={logIn} style={loginHeaderButton}>Log In</button>
+                <Link href='/'>
+                    <button id='logout_btn_header' onClick={logOut} style={logoutHeaderButton}>Log Out</button>
+                </Link>
             </div>
         </header>
     );
