@@ -1,26 +1,17 @@
 'use client';
-// import Image from "next/image";
+
 import { getAuth, onAuthStateChanged  } from "firebase/auth";
 
 import { db } from "./firebase/firebase-config";
 import Header from "./Header/Header";
 import MainView from "./MainView/MainView";
 import LoggedOutView from "./LoggedOutView/LoggedOutView";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import Footer from "./Footer/Footer";
-import Context from "./context/context";
 import { HeaderContext } from "./context/context";
 
-// export const HeaderContext = createContext();
-
 export default function Home() {
-  // const auth = getAuth();
-  // const [mainViewDisplay, setMainViewDisplay] = useState({display:'none'});
-  // const [loggedOutViewDisplay, setLoggedOutViewDisplay] = useState({display:'block'});
-
-  // const [loginHeaderButton, setLoginHeaderButton] = useState({display:'block'});
-  // const [logoutHeaderButton, setLogoutHeaderButton] = useState({display:'none'});
-
+  // Taking the states from de context so the functions within the useEffect don´t cause an error
   let { setMainViewDisplay, setLoggedOutViewDisplay, setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
 
   useEffect(()=> {
@@ -43,9 +34,8 @@ export default function Home() {
 
   return (
     <>
-    {/* <Context> */}
       <Header />
-    
+      {/* When using a context, there is no need of props. I'll leave the props commented as an example of the effetc of using a context */}
       {/* <Header
         setMainViewDisplay={setMainViewDisplay}
         setLoggedOutViewDisplay={setLoggedOutViewDisplay}
@@ -68,7 +58,6 @@ export default function Home() {
         setLoginHeaderButton={setLoginHeaderButton}
         setLogoutHeaderButton={setLogoutHeaderButton}*/
       />
-      {/* </Context> */}
       <Footer />
     </>
   );

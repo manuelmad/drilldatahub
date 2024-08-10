@@ -1,7 +1,6 @@
 'use client';
 import './loggedOutView.css';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-//import Header from '../Header/Header';
 import { useContext } from 'react';
 import { HeaderContext } from '../context/context';
 
@@ -12,6 +11,7 @@ export default function LoggedOutView(/*{
     setLoginHeaderButton,
     setLogoutHeaderButton
 }*/) {
+    // Taking the states from de context so the functions logIn and logOut don´t cause an error
     let { setMainViewDisplay, loggedOutViewDisplay,setLoggedOutViewDisplay, setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
 
     const logIn = ()=> {
@@ -73,12 +73,14 @@ export default function LoggedOutView(/*{
         input_password.type = 'password';
     }
 
+    // Function to go to focus on password input when the Enter key is pressed in email input
     const focusOnNextInput = (event) => {
         if (event.keyCode == 13) {
             document.querySelector('#user_password').focus();
         }
     }
 
+    // Function to go to focus on LogIn button when the Enter key is pressed in password input
     const focusOnLogInButton = (event) => {
         if (event.keyCode == 13) {
             document.querySelector('#login_btn').focus();
@@ -87,7 +89,6 @@ export default function LoggedOutView(/*{
 
     return (
         <>
-        {/* <Header></Header> */}
         <main style={loggedOutViewDisplay}>
             <section className="logged-out-container">
                 <article>

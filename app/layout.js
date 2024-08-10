@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
       
       <body className={bai_jamjuree.className}>
       <Context>{children}</Context>
-        {/* {children} */}
+        {/* I envelope the {children} inside the Context I created, so now all the states are shared in all the app */}
       </body>
       
     </html>

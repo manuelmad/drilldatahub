@@ -14,13 +14,10 @@ export default function Header(/*{
     logoutHeaderButton,
     setLoginHeaderButton,
     setLogoutHeaderButton
-}*/) {
+} When creating a Context, there is no need of passing states anymore*/) {
+    
+    // Taking the states from de context so the functions logIn and logOut don´t cause an error
     let { setMainViewDisplay, setLoggedOutViewDisplay, loginHeaderButton, logoutHeaderButton, setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
-    // let { setLoggedOutViewDisplay } = useContext(HeaderContext);
-    // let { loginHeaderButton } = useContext(HeaderContext);
-    // let { logoutHeaderButton } = useContext(HeaderContext);
-    // let { setLoginHeaderButton } = useContext(HeaderContext);
-    // let { setLogoutHeaderButton } = useContext(HeaderContext);
 
     const logIn = ()=> {
         const auth = getAuth();

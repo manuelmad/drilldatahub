@@ -9,22 +9,24 @@ import { HeaderContext } from '../context/context';
 
 import { db } from '../firebase/firebase-config';
 import { getAuth, onAuthStateChanged  } from "firebase/auth";
-import { collection, onSnapshot, getDocs } from "firebase/firestore";
-// import Context from '../context/context';
+import { collection, getDocs } from "firebase/firestore";
 
 export default function EventView({chidren}) {
 
-    // const event_info_container = document.getElementById('event-info_container');
-
     const getEventInfo = async () => {
         const event_info_container = document.getElementById('event-info_container');
+
+        // Get data from localStorage
         let eventData = localStorage.getItem('eventData');
         let eventInStorage = JSON.parse(eventData);
 
         let reportsRef = localStorage.getItem('reportsRef');
         const newRef = collection(db, `${reportsRef}/reportes`);
+
+        // Get data from database
         const reports = await getDocs(newRef);
 
+        // Create article to show general info about the event
         const article1 = document.createElement('article');
         const h2 = document.createElement('h2');
         h2.innerHTML = `${eventInStorage['Pozo']}`;
@@ -52,6 +54,7 @@ export default function EventView({chidren}) {
         article1.appendChild(p2);
         event_info_container.appendChild(article1);
 
+        // Create article to show a list of existing reports
         const article2 = document.createElement('article');
         const pReports = document.createElement('p');
         pReports.innerHTML = `Reportes:`;
@@ -64,6 +67,7 @@ export default function EventView({chidren}) {
             const a = document.createElement('a');
             a.innerHTML = `${reportInfo.Tipo} - ${(new Date ((reportInfo['Fecha'].seconds)*1000)).getDate()}/${((new Date ((reportInfo['Fecha'].seconds)*1000)).getMonth())+1}/${(new Date ((reportInfo['Fecha'].seconds)*1000)).getFullYear()}.`;
             article2.appendChild(a);
+            // Event to create a table when a report in the list is clicked
             a.addEventListener('click', ()=> {
                 reportViewer.innerHTML = '';
                 const table = document.createElement('table');
@@ -159,22 +163,23 @@ export default function EventView({chidren}) {
         });
         event_info_container.appendChild(article2);
     }
-
+    // Getting the states from de context so the function onAuthStateChanged doesn´t cause an error
     let { setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
 
     useEffect(()=> {
-        // Check state of auth and display the correponding view
-      const auth = getAuth();
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          setLoginHeaderButton({display:"none"});
-          setLogoutHeaderButton({display:"block"});
-        } else {
-          setLoginHeaderButton({display:"block"});
-          setLogoutHeaderButton({display:"none"});
-        }
-      })
+        // Check state of auth and display the correponding view in Header
+        const auth = getAuth();
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+            setLoginHeaderButton({display:"none"});
+            setLogoutHeaderButton({display:"block"});
+            } else {
+            setLoginHeaderButton({display:"block"});
+            setLogoutHeaderButton({display:"none"});
+            }
+        })
 
+        // Cleaning the event container and adding the new information
         const event_info_container = document.getElementById('event-info_container');
         event_info_container.innerHTML = '';
         getEventInfo();
@@ -182,18 +187,10 @@ export default function EventView({chidren}) {
     
     return(
         <>
-            {/* <Context> */}
-                {/* <Header /> */}
-                <Header>{chidren}</Header>
-            {/* </Context> */}
+            <Header></Header>
             <main>
                 <section id='event-info_container'>
-                    {/* <article>
-                        <p>Fecha inicial: {eventData['Fecha Inicial']}</p>
-                        <p>Fecha final: {eventData['Fecha Final']}</p>
-                        <p>Tipo de evento: {eventData.Tipo}</p>
-                        <p>Subtipo de evento: {eventData.Subtipo}</p>
-                    </article> */}
+
                 </section>
                 <section id='current-report__container'></section>
             </main>
