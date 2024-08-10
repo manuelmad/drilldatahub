@@ -1,6 +1,7 @@
+'use client';
 import { createContext, useState } from "react";
 
-export const HeaderContext = createContext({display:'block'});
+export const HeaderContext = createContext({});
 
 export default function Context({ children }) {
     //const [message, setMessage] = useState();

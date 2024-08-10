@@ -1,15 +1,18 @@
 'use client';
 import './loggedOutView.css';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import Header from '../Header/Header';
+//import Header from '../Header/Header';
+import { useContext } from 'react';
+import { HeaderContext } from '../context/context';
 
-export default function LoggedOutView({
+export default function LoggedOutView(/*{
     setMainViewDisplay,
     setLoggedOutViewDisplay,
     loggedOutViewDisplay,
     setLoginHeaderButton,
     setLogoutHeaderButton
-}) {
+}*/) {
+    let { setMainViewDisplay, loggedOutViewDisplay,setLoggedOutViewDisplay, setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
 
     const logIn = ()=> {
         const auth = getAuth();

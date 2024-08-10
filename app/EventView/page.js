@@ -4,12 +4,15 @@ import './EventView.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { useEffect } from 'react';
+import { useContext } from 'react';
+import { HeaderContext } from '../context/context';
 
 import { db } from '../firebase/firebase-config';
+import { getAuth, onAuthStateChanged  } from "firebase/auth";
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
-import Context from '../context/context';
+// import Context from '../context/context';
 
-export default function EventView({}) {
+export default function EventView({chidren}) {
 
     // const event_info_container = document.getElementById('event-info_container');
 
@@ -157,7 +160,21 @@ export default function EventView({}) {
         event_info_container.appendChild(article2);
     }
 
+    let { setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
+
     useEffect(()=> {
+        // Check state of auth and display the correponding view
+      const auth = getAuth();
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          setLoginHeaderButton({display:"none"});
+          setLogoutHeaderButton({display:"block"});
+        } else {
+          setLoginHeaderButton({display:"block"});
+          setLogoutHeaderButton({display:"none"});
+        }
+      })
+
         const event_info_container = document.getElementById('event-info_container');
         event_info_container.innerHTML = '';
         getEventInfo();
@@ -166,7 +183,8 @@ export default function EventView({}) {
     return(
         <>
             {/* <Context> */}
-                <Header />
+                {/* <Header /> */}
+                <Header>{chidren}</Header>
             {/* </Context> */}
             <main>
                 <section id='event-info_container'>

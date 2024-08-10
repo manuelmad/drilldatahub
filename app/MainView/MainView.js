@@ -6,11 +6,11 @@ import NewEventModal from '../NewEventModal/NewEventModal';
 import { db } from '../firebase/firebase-config';
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { HeaderContext } from '../context/context';
 
-export default function MainView ({
-    mainViewDisplay
-}) {
+export default function MainView () {
+    let { mainViewDisplay } = useContext(HeaderContext);
 
     const [newEventModalDisplay, setNewEventModalDisplay] = useState({display: 'none'});
 

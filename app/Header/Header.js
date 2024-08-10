@@ -93,8 +93,8 @@ export default function Header(/*{
             </div>
             <div className='buttons__container'>
                 <button id='login_btn_header' onClick={logIn} style={loginHeaderButton}>Log In</button>
-                <Link href='/'>
-                    <button id='logout_btn_header' onClick={logOut} style={logoutHeaderButton}>Log Out</button>
+                <Link href='/' style={logoutHeaderButton}>
+                    <button id='logout_btn_header' onClick={logOut}>Log Out</button>
                 </Link>
             </div>
         </header>
