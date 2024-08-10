@@ -1,7 +1,23 @@
-#event-info_container, #current-report__container {
+#event-info_container, #current-report__container, .new-report-btn__container {
     width: 28rem;
     margin: 0 auto;
     padding-top: 4rem;
+}
+
+.new-report-btn__container p {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+#file_report {
+    color: var(--white);
+}
+
+.import-container {
+    border: 0.3rem solid var(--yellow-rig);
+    padding: 2rem;
+    margin-top: 2rem;
+    display: none;
 }
 
 #event-info_container article:not(:first-child) {
@@ -22,6 +38,7 @@
 #event-info_container article a {
     display: block;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 table {
@@ -52,8 +69,42 @@ table td {
     border: 0.1rem solid var(--black);
 }
 
+#create_new_report_btn {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    background-color: var(--yellow-rig);
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+#create_new_report_btn:active {
+    background-color: var(--dark-background);
+    border: 0.3rem solid var(--yellow-rig);
+    color: var(--white);
+}
+
+#new_report_cancel {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--yellow-rig);
+    color: var(--white);
+    background-color: var(--dark-background);
+    cursor: pointer;
+}
+
+#new_report_cancel:active {
+    background-color: var(--yellow-rig);
+    border: 0.3rem solid var(--dark-background);
+    color: var(--black);
+}
+
 @media (min-width: 1060px) {
-    #event-info_container, #current-report__container {
+    #event-info_container, #current-report__container, .new-report-btn__container {
         width: 80rem;
     }
 

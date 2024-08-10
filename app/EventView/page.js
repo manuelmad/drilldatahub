@@ -9,9 +9,9 @@ import { HeaderContext } from '../context/context';
 
 import { db } from '../firebase/firebase-config';
 import { getAuth, onAuthStateChanged  } from "firebase/auth";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
 
-export default function EventView({chidren}) {
+export default function EventView() {
 
     const getEventInfo = async () => {
         const event_info_container = document.getElementById('event-info_container');
@@ -163,6 +163,17 @@ export default function EventView({chidren}) {
         });
         event_info_container.appendChild(article2);
     }
+
+    const showImportDiv = () => {
+        const div = document.querySelector('.import-container');
+        div.style.display = 'block';
+    }
+
+    const hideImportDiv = () => {
+        const div = document.querySelector('.import-container');
+        div.style.display = 'none';
+    }
+
     // Getting the states from de context so the function onAuthStateChanged doesn´t cause an error
     let { setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
 
@@ -191,6 +202,15 @@ export default function EventView({chidren}) {
             <main>
                 <section id='event-info_container'>
 
+                </section>
+                <section className='new-report-btn__container'>
+                    <p>
+                        <button id='create_new_report_btn' onClick={showImportDiv}>Importar nuevo reporte</button>
+                    </p>
+                    <div className='import-container'>
+                        <p><input id='file_report' accept='.xls, .xlsx' type='file' /></p>
+                        <p><button id='new_report_cancel' onClick={hideImportDiv}>CANCELAR</button></p>
+                    </div>
                 </section>
                 <section id='current-report__container'></section>
             </main>
