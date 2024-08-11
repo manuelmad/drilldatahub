@@ -22,7 +22,9 @@ export default function EventView() {
         let eventInStorage = JSON.parse(eventData);
 
         let reportsRef = localStorage.getItem('reportsRef');
-        const newRef = collection(db, `${reportsRef}/reportes`);
+        const reportsInEvent = `${reportsRef}/reportes`;
+        const newRef = collection(db, reportsInEvent);
+        localStorage.setItem('reportsInEvent', reportsInEvent); // Setting a value used later in ExcelImporter component
 
         // Get data from database
         const reports = await getDocs(newRef);
@@ -66,7 +68,7 @@ export default function EventView() {
         reports.docs.forEach(report => {
             const reportInfo = report.data();
             const a = document.createElement('a');
-            a.innerHTML = `${reportInfo.Tipo} - ${(new Date ((reportInfo['Fecha'].seconds)*1000)).getDate()}/${((new Date ((reportInfo['Fecha'].seconds)*1000)).getMonth())+1}/${(new Date ((reportInfo['Fecha'].seconds)*1000)).getFullYear()}.`;
+            a.innerHTML = `${reportInfo.Tipo} - ${((new Date ((reportInfo['Fecha'].seconds)*1000)).getDate())+1}/${((new Date ((reportInfo['Fecha'].seconds)*1000)).getMonth())+1}/${(new Date ((reportInfo['Fecha'].seconds)*1000)).getFullYear()}.`;
             article2.appendChild(a);
             // Event to create a table when a report in the list is clicked
             a.addEventListener('click', ()=> {
@@ -93,7 +95,7 @@ export default function EventView() {
                 const trhead3 = document.createElement('tr');
                 const tdhead3 = document.createElement('th');
                 tdhead3.setAttribute('colspan', 5);
-                tdhead3.innerHTML = `Fecha: ${(new Date ((reportInfo['Fecha'].seconds)*1000)).getDate()}/${((new Date ((reportInfo['Fecha'].seconds)*1000)).getMonth())+1}/${(new Date ((reportInfo['Fecha'].seconds)*1000)).getFullYear()}`;
+                tdhead3.innerHTML = `Fecha: ${((new Date ((reportInfo['Fecha'].seconds)*1000)).getDate())+1}/${((new Date ((reportInfo['Fecha'].seconds)*1000)).getMonth())+1}/${(new Date ((reportInfo['Fecha'].seconds)*1000)).getFullYear()}`;
                 trhead3.appendChild(tdhead3);
 
                 const trhead4 = document.createElement('tr');
@@ -124,13 +126,13 @@ export default function EventView() {
                     const trbody = document.createElement('tr');
                     const td1 = document.createElement('td');
                     let a = (((activity.Desde)/60)-Math.floor((activity.Desde)/60))*60;
-                    td1.innerHTML = `${Math.floor((activity.Desde)/60)}:${a === 0 ? '00' : a}`;
+                    td1.innerHTML = `${Math.floor((activity.Desde)/60)}:${a === 0 ? '00' : a.toFixed(0)}`;
                     const td2 = document.createElement('td');
                     let b = (((activity.Hasta)/60)-Math.floor((activity.Hasta)/60))*60;
-                    td2.innerHTML = `${Math.floor((activity.Hasta)/60)}:${b === 0 ? '00' : b}`;
+                    td2.innerHTML = `${Math.floor((activity.Hasta)/60)}:${b === 0 ? '00' : b.toFixed(0)}`;
                     const td3 = document.createElement('td');
                     let c = (((activity.Total)/60)-Math.floor((activity.Total)/60))*60;
-                    td3.innerHTML = `${Math.floor((activity.Total)/60)}:${c === 0 ? '00' : c}`;
+                    td3.innerHTML = `${Math.floor((activity.Total)/60)}:${c === 0 ? '00' : c.toFixed(0)}`;
                     const td4 = document.createElement('td');
                     td4.innerHTML = `${activity.Código}`;
                     td4.setAttribute('class', 'code-column')
@@ -151,7 +153,7 @@ export default function EventView() {
                 td6.setAttribute('colspan', 2);
                 // td6.innerHTML = 'Horas totales:';
                 const td7 = document.createElement('td');
-                td7.innerHTML = `${hoursInDay}`;
+                td7.innerHTML = `${hoursInDay.toFixed(0)}`;
                 const td8 = document.createElement('td');
                 const td9 = document.createElement('td');
                 trbody2.appendChild(td6);
