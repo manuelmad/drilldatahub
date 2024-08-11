@@ -3,6 +3,7 @@
 import './EventView.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import ExcelImporter from '../ExcelImporter/ExcelImporter';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { HeaderContext } from '../context/context';
@@ -169,11 +170,6 @@ export default function EventView() {
         div.style.display = 'block';
     }
 
-    const hideImportDiv = () => {
-        const div = document.querySelector('.import-container');
-        div.style.display = 'none';
-    }
-
     // Getting the states from de context so the function onAuthStateChanged doesn´t cause an error
     let { setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
 
@@ -207,10 +203,7 @@ export default function EventView() {
                     <p>
                         <button id='create_new_report_btn' onClick={showImportDiv}>Importar nuevo reporte</button>
                     </p>
-                    <div className='import-container'>
-                        <p><input id='file_report' accept='.xls, .xlsx' type='file' /></p>
-                        <p><button id='new_report_cancel' onClick={hideImportDiv}>CANCELAR</button></p>
-                    </div>
+                    <ExcelImporter></ExcelImporter>
                 </section>
                 <section id='current-report__container'></section>
             </main>

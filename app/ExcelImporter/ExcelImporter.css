@@ -1,0 +1,55 @@
+.import-container {
+    border: 0.3rem solid var(--yellow-rig);
+    padding: 2rem;
+    margin-top: 2rem;
+    display: none;
+}
+
+.import-container p {
+    color: var(--white);
+}
+
+.import-container select {
+    height: 5rem;
+    width: 20rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+#new_report_date {
+    height: 5rem;
+    width: 20rem;
+    margin-top: 1rem;
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    font-size: var(--md);
+}
+
+#send_new_report_btn {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    background-color: var(--yellow-rig);
+    border-radius: 1rem;
+    cursor: pointer;
+    margin-top: 4rem;
+}
+
+#new_report_cancel {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--yellow-rig);
+    color: var(--white);
+    background-color: var(--dark-background);
+    cursor: pointer;
+}
+
+#new_report_cancel:active {
+    background-color: var(--yellow-rig);
+    border: 0.3rem solid var(--dark-background);
+    color: var(--black);
+}
