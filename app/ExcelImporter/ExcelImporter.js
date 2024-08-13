@@ -17,7 +17,7 @@ export default function ExcelImporter() {
 
         // Show an alert in case a non-excel file is selected (maybe is not necessary because I used the 'accept' attribute in the input)
         if (type[type.length - 1] !== 'xlsx' && type[type.length - 1] !== 'xls') {
-            alert ('Seleccione solo el archivo de Excel para importar');
+            alert ('Solo puede seleccionar archivos de Excel para importar.');
             return false;
         }
 
@@ -32,12 +32,31 @@ export default function ExcelImporter() {
 
             result = []; // Cleaning the array before adding elements
 
-            // Code to go through all sheets in the excel file, creating an object for every row and adding it as a new element in the "result" array
+            // Code to abort the function if the excel file has more than 1 sheet
+            const sheetsNumber = zzexcel.SheetNames.length;
+            if(sheetsNumber > 1) {
+                alert('El archivo seleccionado debe contener solo 1 hoja de cálculo.');
+                document.querySelector("#file_report").value = '';
+                return false;
+            }
+            const resultKeys = [];
+            // Code to go through all sheets (not necessary with the previous conditional) in the excel file, creating an object for every row and adding it as a new element in the "result" array
             for (let i = 0; i < zzexcel.SheetNames.length; i++) {
                 const newData = XLS.utils.sheet_to_json(zzexcel.Sheets[zzexcel.SheetNames[i]]);
-                result.push(...newData)
+                result.push(...newData);
+                for(let j = 0; i < newData.length; i++) {
+                    resultKeys.push(Object.keys(newData[j]));
+                }
             }
-            console.log('result', result);
+            // console.log('result', result);
+            // console.log('resultKeys', resultKeys);
+
+            // Code to abort the function if the excel file has wrong values in the first row
+            if(resultKeys[0][0] !== 'DESDE' || resultKeys[0][1] !== 'HASTA' || resultKeys[0][2] !== 'TOTAL' || resultKeys[0][3] !== 'CODIGO' || resultKeys[0][4] !== 'OPERACIONES') {
+                alert('Por favor, modifique el archivo para que sea compatible con la aplicación. La primera fila debe contener exactamente los siguientes valores en el orden mostrado: DESDE, HASTA, TOTAL, CODIGO, OPERACIONES.');
+                document.querySelector("#file_report").value = '';
+                return false;
+            }
         }
     }
 
@@ -51,7 +70,23 @@ export default function ExcelImporter() {
         // Getting values from HTML
         const reportDate = document.getElementById('new_report_date').valueAsNumber;
         const reportType = document.getElementById('report_type_select').value;
-        console.log(reportDate, document.getElementById('new_report_date').value, document.getElementById('new_report_date').value);
+
+        if(document.getElementById('new_report_date').value == '') {
+            alert('Por favor, ingrese la fecha del reporte.');
+            return;
+        }
+
+        if(reportType == '--------') {
+            alert('Por favor, elija un tipo de reporte.');
+            return;
+        }
+
+        if(document.querySelector("#file_report").value = '') {
+            alert('Por favor, importe un archivo Excel.');
+            return;
+        }
+        
+        //console.log(reportDate, document.getElementById('new_report_date').value, document.getElementById('new_report_date').value);
 
         // Variable to save the objects created from the excel file
         let activities = [];
