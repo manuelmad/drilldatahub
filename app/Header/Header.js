@@ -65,6 +65,8 @@ export default function Header(/*{
             setLoggedOutViewDisplay({display:'block'});
             setLoginHeaderButton({display:'block'});
             setLogoutHeaderButton({display:'none'});
+            document.getElementById('user_email').value = '';
+            document.getElementById('user_password').value = '';
         }).catch((error) => {
             // An error happened.
             console.log('error on signOut: ', error);

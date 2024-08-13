@@ -71,6 +71,7 @@ export default function ExcelImporter() {
         const reportDate = document.getElementById('new_report_date').valueAsNumber;
         const reportType = document.getElementById('report_type_select').value;
 
+        // Establishing conditions to abort the sending of the report if any value is missing
         if(document.getElementById('new_report_date').value == '') {
             alert('Por favor, ingrese la fecha del reporte.');
             return;
@@ -81,7 +82,7 @@ export default function ExcelImporter() {
             return;
         }
 
-        if(document.querySelector("#file_report").value = '') {
+        if(document.querySelector("#file_report").value == '') {
             alert('Por favor, importe un archivo Excel.');
             return;
         }

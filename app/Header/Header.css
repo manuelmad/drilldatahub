@@ -27,7 +27,9 @@
 
 .buttons__container {
     grid-column: 1 / 3;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .buttons__container button {
@@ -54,9 +56,6 @@
     }
 
     .buttons__container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         grid-column: 3 / 4;
     }
 

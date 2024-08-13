@@ -4,6 +4,10 @@
     padding-top: 4rem;
 }
 
+#event-info_container, .new-report-btn__container > p:first-child {
+    border-top: 0.15rem solid var(--light-gray);
+}
+
 .new-report-btn__container p {
     text-align: center;
     margin-top: 2rem;
@@ -66,6 +70,7 @@ table td {
     background-color: var(--yellow-rig);
     border-radius: 1rem;
     cursor: pointer;
+    margin-top: 2rem;
 }
 
 #create_new_report_btn:active {
