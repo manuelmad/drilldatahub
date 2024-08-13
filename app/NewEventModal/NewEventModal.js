@@ -85,8 +85,8 @@ export default function NewEventModal ({
         const event_subtype = document.getElementById('event_subtype_select').value;
         const formation_name = document.getElementById('goal_formation').value;
         const rig_name = document.getElementById('rig_name').value;
-        const init_date = document.getElementById('init_date').value;
-        const final_date = document.getElementById('final_date').value;
+        const init_date = document.getElementById('init_date').valueAsNumber;
+        //const final_date = document.getElementById('final_date').value;
         const estimated_time = document.getElementById('estimated_time').value;
 
         // Stablishing conditions so the user HAS to fill all the fields.
@@ -120,7 +120,7 @@ export default function NewEventModal ({
             return;
         }
 
-        if(isNaN(new Date(init_date).getTime())) {
+        if(document.getElementById('init_date').value == '') {
             alert(`Por favor, ingrese una fecha inicial válida para el evento. Esto podrá ser modificado luego en caso de errores.`);
             return;
         }
@@ -134,17 +134,17 @@ export default function NewEventModal ({
         // Creating the 'eventos' collection and its reference
         const eventsCollectionRef = collection(db, `${field_name}/${well_name}/eventos`);
 
-        // Creating a new Doc in the eventos conllection, with an automatic id (addDoc)
+        // Creating a new Doc in the eventos collection, with an automatic id (addDoc)
         await addDoc(eventsCollectionRef, {
             'Tipo': event_type,
             'Subtipo': event_subtype,
             'Objetivo': formation_name,
             'Taladro': rig_name,
             'Fecha Inicial':{
-                seconds: (new Date(init_date).getTime())/1000
+                seconds: init_date/1000
             },
             'Fecha Final':{
-                seconds: (new Date(final_date).getTime())/1000
+                seconds: NaN /*(new Date(final_date).getTime())/1000*/
             },
             'Tiempo Estimado': Number(estimated_time)
         });
@@ -194,16 +194,16 @@ export default function NewEventModal ({
             </p>
             <p>
                 <label htmlFor='init_date'>Indique la FECHA DE INICIO del evento:</label>
-                <input id='init_date' type='datetime-local'>
+                <input id='init_date' type='date'>
 
                 </input>
             </p>
-            <p>
+            {/* <p>
                 <label htmlFor='init_date'>Indique la FECHA FINAL del evento:</label>
                 <input id='final_date' type='datetime-local'>
 
                 </input>
-            </p>
+            </p> */}
             <p>
                 <label htmlFor='estimated_time'>Indique el TIEMPO ESTIMADO del evento (días):</label>
                 <input id='estimated_time' type='number'>

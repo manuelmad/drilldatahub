@@ -4,7 +4,7 @@ import './MainView.css';
 import NewEventModal from '../NewEventModal/NewEventModal';
 
 import { db } from '../firebase/firebase-config';
-import { collection, onSnapshot, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, getDocs, query, orderBy } from "firebase/firestore";
 
 import { useEffect, useState, useContext } from "react";
 import { HeaderContext } from '../context/context';
@@ -119,6 +119,10 @@ export default function MainView () {
                     // Getting the events of a well
                     const events = await getDocs(newRef);
 
+                    // Get ordered data by date from database (I'll use this one instead)
+                    const q = query(newRef, orderBy("Fecha Inicial"));
+                    const orderedEvents = await getDocs(q);
+
                     // If events exist, show the events by well name and date
                     if(events.docs.length) {
                         //console.log(`Hay eventos en el pozo ${well.id}`);
@@ -130,12 +134,12 @@ export default function MainView () {
                         const h3 = document.createElement('h3');
                         h3.innerText = `${well.id}`;
                         const p = document.createElement('p');
-                        events.docs.forEach(event => {
+                        orderedEvents.docs.forEach(event => {
                             const eventInfo = event.data();
                             const dayi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getDate();
                             const monthi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getMonth();
                             const yeari = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getFullYear();
-                            const eventTitle = `${eventInfo.Tipo} ${dayi}/${monthi+1}/${yeari}`;
+                            const eventTitle = `${eventInfo.Tipo} - ${dayi+1}/${monthi+1}/${yeari}`;
                             const a = document.createElement('a');
                             a.innerText = eventTitle;
                             a.href = '/EventView';
@@ -144,8 +148,8 @@ export default function MainView () {
                                 'Taladro': `${eventInfo['Taladro']}`,
                                 'Objetivo': `${eventInfo['Objetivo']}`,
                                 'Tiempo Estimado': `${eventInfo['Tiempo Estimado']}`,
-                                'Fecha Inicial': `${dayi}/${monthi+1}/${yeari}`,
-                                'Fecha Final': `${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getDate()}/${((new Date ((eventInfo['Fecha Final'].seconds)*1000)).getMonth())+1}/${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getFullYear()}`,
+                                'Fecha Inicial': `${dayi+1}/${monthi+1}/${yeari}`,
+                                'Fecha Final': `${((new Date ((eventInfo['Fecha Final'].seconds)*1000)).getDate())+1}/${((new Date ((eventInfo['Fecha Final'].seconds)*1000)).getMonth())+1}/${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getFullYear()}`,
                                 'Tipo': `${eventInfo.Tipo}`,
                                 'Subtipo': `${eventInfo.Subtipo}`
                             }
