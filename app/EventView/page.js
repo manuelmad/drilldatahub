@@ -10,7 +10,7 @@ import { HeaderContext } from '../context/context';
 
 import { db } from '../firebase/firebase-config';
 import { getAuth, onAuthStateChanged  } from "firebase/auth";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, query, orderBy } from "firebase/firestore";
 
 export default function EventView() {
 
@@ -27,7 +27,12 @@ export default function EventView() {
         localStorage.setItem('reportsInEvent', reportsInEvent); // Setting a value used later in ExcelImporter component
 
         // Get data from database
-        const reports = await getDocs(newRef);
+        //const reports = await getDocs(newRef);
+
+        // Get ordered data by date from database (I'll use this one instead)
+        const q = query(newRef, orderBy("Fecha"));
+        const orderedReports = await getDocs(q);
+        //console.log(orderedReports);
 
         // Create article to show general info about the event
         const article1 = document.createElement('article');
@@ -65,7 +70,7 @@ export default function EventView() {
 
         const reportViewer = document.getElementById('current-report__container');
 
-        reports.docs.forEach(report => {
+        orderedReports.docs.forEach(report => {
             const reportInfo = report.data();
             const a = document.createElement('a');
             a.innerHTML = `${reportInfo.Tipo} - ${((new Date ((reportInfo['Fecha'].seconds)*1000)).getDate())+1}/${((new Date ((reportInfo['Fecha'].seconds)*1000)).getMonth())+1}/${(new Date ((reportInfo['Fecha'].seconds)*1000)).getFullYear()}.`;
