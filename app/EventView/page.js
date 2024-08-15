@@ -10,7 +10,7 @@ import { HeaderContext } from '../context/context';
 
 import { db } from '../firebase/firebase-config';
 import { getAuth, onAuthStateChanged  } from "firebase/auth";
-import { collection, doc, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, updateDoc, query, orderBy } from "firebase/firestore";
 
 export default function EventView() {
 
@@ -18,40 +18,56 @@ export default function EventView() {
         const event_info_container = document.getElementById('event-info_container');
 
         // Get data from localStorage
-        let eventData = localStorage.getItem('eventData');
-        let eventInStorage = JSON.parse(eventData);
+        let wellName = localStorage.getItem('currentWell');
+        let eventRefInStorage = localStorage.getItem('eventRef');
 
-        let reportsRef = localStorage.getItem('reportsRef');
-        const reportsInEvent = `${reportsRef}/reportes`;
-        const newRef = collection(db, reportsInEvent);
+        // Setting data in localStorage for later use
+        const reportsInEvent = `${eventRefInStorage}/reportes`;
+        const reportsInEventRef = collection(db, reportsInEvent);
         localStorage.setItem('reportsInEvent', reportsInEvent); // Setting a value used later in ExcelImporter component
 
-        // Get data from database
-        //const reports = await getDocs(newRef);
-
+        // Create a ref to the event (doc)
+        let eventDoc = doc(db, eventRefInStorage);
+        
         // Get ordered data by date from database (I'll use this one instead)
-        const q = query(newRef, orderBy("Fecha"));
+        const q = query(reportsInEventRef, orderBy("Fecha"));
         const orderedReports = await getDocs(q);
-        //console.log(orderedReports);
+
+        // If there is at least 1 report, get the last report's date and stablishes it as the final event's date
+        let orderedReportsLenght =  orderedReports.docs.length;
+        if(orderedReportsLenght > 0) {
+            let finalDate = orderedReports.docs[orderedReportsLenght-1].data()['Fecha'].seconds;
+            // Establish the event's final date
+            await updateDoc(eventDoc, {
+                'Fecha Final':{
+                    seconds: finalDate
+                }
+            });
+        }
+
+        // Get all updated data from the event (doc)
+        let eventRef = await getDoc(eventDoc);
+        let eventData = eventRef.data();
 
         // Create article to show general info about the event
         const article1 = document.createElement('article');
         const h2 = document.createElement('h2');
-        h2.innerHTML = `${eventInStorage['Pozo']}`;
+        h2.innerHTML = `${wellName}`;
         const p1 = document.createElement('p');
-        p1.innerHTML = `Fecha inicial: ${eventInStorage['Fecha Inicial']}.`;
+        p1.innerHTML = `Fecha inicial: ${((new Date((eventData['Fecha Inicial'].seconds)*1000)).getDate())+1}/${((new Date ((eventData['Fecha Inicial'].seconds)*1000)).getMonth())+1}/${(new Date ((eventData['Fecha Inicial'].seconds)*1000)).getFullYear()}.`;
         const p2 = document.createElement('p');
-        p2.innerHTML = `Fecha final: ${eventInStorage['Fecha Final'] === 'NaN/NaN/NaN' ? 'No Disponible' : eventInStorage['Fecha Final']}.`;
+        const validFinalDate = `${((new Date((eventData['Fecha Final'].seconds)*1000)).getDate())+1}/${((new Date ((eventData['Fecha Final'].seconds)*1000)).getMonth())+1}/${(new Date ((eventData['Fecha Final'].seconds)*1000)).getFullYear()}`;
+        p2.innerHTML = `Fecha final: ${isNaN(eventData['Fecha Final'].seconds) ? 'No Disponible' : validFinalDate}.`;
         const p3 = document.createElement('p');
-        p3.innerHTML = `Tipo de evento: ${eventInStorage.Tipo}.`;
+        p3.innerHTML = `Tipo de evento: ${eventData.Tipo}.`;
         const p4 = document.createElement('p');
-        p4.innerHTML = `Subtipo de evento: ${eventInStorage.Subtipo}.`;
+        p4.innerHTML = `Subtipo de evento: ${eventData.Subtipo}.`;
         const p5 = document.createElement('p');
-        p5.innerHTML = `Taladro: ${eventInStorage.Taladro}.`;
+        p5.innerHTML = `Taladro: ${eventData.Taladro}.`;
         const p6 = document.createElement('p');
-        p6.innerHTML = `Objetivo: ${eventInStorage.Objetivo}.`;
+        p6.innerHTML = `Objetivo: ${eventData.Objetivo}.`;
         const p7 = document.createElement('p');
-        p7.innerHTML = `Tiempo Estimado: ${eventInStorage['Tiempo Estimado']} días.`;
+        p7.innerHTML = `Tiempo Estimado: ${eventData['Tiempo Estimado']} días.`;
         article1.appendChild(h2);
         article1.appendChild(p5);
         article1.appendChild(p3);
@@ -64,9 +80,9 @@ export default function EventView() {
 
         // Create article to show a list of existing reports
         const article2 = document.createElement('article');
-        const pReports = document.createElement('p');
-        pReports.innerHTML = `Reportes:`;
-        article2.appendChild(pReports);
+        const h4Reports = document.createElement('h4');
+        h4Reports.innerHTML = `Reportes:`;
+        article2.appendChild(h4Reports);
 
         const reportViewer = document.getElementById('current-report__container');
 

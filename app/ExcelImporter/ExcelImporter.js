@@ -86,8 +86,6 @@ export default function ExcelImporter() {
             alert('Por favor, importe un archivo Excel.');
             return;
         }
-        
-        //console.log(reportDate, document.getElementById('new_report_date').value, document.getElementById('new_report_date').value);
 
         // Variable to save the objects created from the excel file
         let activities = [];

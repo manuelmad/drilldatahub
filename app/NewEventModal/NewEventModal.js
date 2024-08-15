@@ -130,7 +130,6 @@ export default function NewEventModal ({
             return;
         }
 
-        //console.log(field_name, well_name, event_type, event_subtype, formation_name, rig_name, init_date, estimated_time);
         // Creating the 'eventos' collection and its reference
         const eventsCollectionRef = collection(db, `${field_name}/${well_name}/eventos`);
 
@@ -144,7 +143,7 @@ export default function NewEventModal ({
                 seconds: init_date/1000
             },
             'Fecha Final':{
-                seconds: NaN /*(new Date(final_date).getTime())/1000*/
+                seconds: NaN /* Later, when reports are uploaded, the final date of the event will be the same as the last report's date */
             },
             'Tiempo Estimado': Number(estimated_time)
         });

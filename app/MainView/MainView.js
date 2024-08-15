@@ -143,19 +143,9 @@ export default function MainView () {
                             const a = document.createElement('a');
                             a.innerText = eventTitle;
                             a.href = '/EventView';
-                            let eventData = {
-                                'Pozo': `${well.id}`,
-                                'Taladro': `${eventInfo['Taladro']}`,
-                                'Objetivo': `${eventInfo['Objetivo']}`,
-                                'Tiempo Estimado': `${eventInfo['Tiempo Estimado']}`,
-                                'Fecha Inicial': `${dayi+1}/${monthi+1}/${yeari}`,
-                                'Fecha Final': `${((new Date ((eventInfo['Fecha Final'].seconds)*1000)).getDate())+1}/${((new Date ((eventInfo['Fecha Final'].seconds)*1000)).getMonth())+1}/${(new Date ((eventInfo['Fecha Final'].seconds)*1000)).getFullYear()}`,
-                                'Tipo': `${eventInfo.Tipo}`,
-                                'Subtipo': `${eventInfo.Subtipo}`
-                            }
                             a.onclick = ()=>{
-                                localStorage.setItem('eventData', JSON.stringify(eventData));
-                                localStorage.setItem('reportsRef', `${col.id}/${well.id}/eventos/${event.id}`);
+                                localStorage.setItem('currentWell', well.id);
+                                localStorage.setItem('eventRef', `${col.id}/${well.id}/eventos/${event.id}`);
                             };
                             p.appendChild(a);
 

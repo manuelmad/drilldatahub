@@ -39,14 +39,22 @@
     color: var(--white);
 }
 
+#events_container h2 {
+    background-color: var(--yellow-rig);
+    border-radius: 0.5rem;
+    color: var(--black);
+    padding: 0.5rem;
+}
+
 #events_container h3 {
     margin-top: 2rem;
-    padding-left: 1rem;
+    /* padding-left: 1rem; */
 }
 
 #events_container article p {
     margin-top: 1rem;
-    padding-left: 1rem;
+    /* padding-left: 1rem; */
+    color: var(--light-gray);
 }
 
 #events_container article a {
@@ -57,6 +65,9 @@
 
 #events_container article a {
     cursor: pointer;
+    margin-top: 1rem;
+    color: var(--light-gray);
+    text-decoration: underline;
 }
 
 @media (min-width: 1060px) {

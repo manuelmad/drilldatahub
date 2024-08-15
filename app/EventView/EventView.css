@@ -26,12 +26,15 @@
 
 #event-info_container article p {
     margin-top: 1rem;
+    color: var(--light-gray);
 }
 
 #event-info_container article a {
     display: block;
     cursor: pointer;
     text-decoration: underline;
+    margin-top: 1rem;
+    color: var(--light-gray);
 }
 
 table {
