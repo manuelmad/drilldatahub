@@ -44,6 +44,7 @@
     border-radius: 0.5rem;
     color: var(--black);
     padding: 0.5rem;
+    cursor: pointer;
 }
 
 #events_container h3 {
@@ -73,6 +74,11 @@
 @media (min-width: 1060px) {
     #events_container, #create-event-btn__container {
         width: 80rem;
+    }
+
+    #events_container article {
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
 
     #events_container article {

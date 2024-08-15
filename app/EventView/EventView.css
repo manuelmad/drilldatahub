@@ -87,6 +87,11 @@ table td {
         width: 80rem;
     }
 
+    #event-info_container article {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
     table {
         font-size: var(--md);
     }

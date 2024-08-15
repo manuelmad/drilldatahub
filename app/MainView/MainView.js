@@ -100,6 +100,18 @@ export default function MainView () {
             h2.innerText = `${col.id == 'alturitas' ? 'Alturitas' : col.id == 'alpuf' ? 'Alpuf' : col.id == 'machiques' ? 'Machiques' : col.id == 'sanjose' ? 'San José' : col.id == 'sanjulian' ? 'San Julián' : ''}`;
             article.appendChild(h2);
             events_container.appendChild(article);
+            
+            // div to contain the wells
+            const div = document.createElement('div');
+            div.style.display = 'block'; // A display has to be declared for the next event to function
+
+            h2.onclick = ()=> {
+                if(h2.nextSibling.style.display == 'block') {
+                    div.style.display = 'none';
+                } else if(div.style.display == 'none') {
+                    div.style.display = 'block';
+                }
+            };
 
             // Create by default a paragraph saying there are no events
             const noEventsP = document.createElement('p');
@@ -148,15 +160,15 @@ export default function MainView () {
                                 localStorage.setItem('eventRef', `${col.id}/${well.id}/eventos/${event.id}`);
                             };
                             p.appendChild(a);
-
                         });
-                        article.appendChild(h3);
-                        article.appendChild(p);
+                        div.appendChild(h3);
+                        div.appendChild(p);
                     } else {
                         //console.log(`No hay eventos en el pozo ${well.id}`);
                     }
                 });
             });
+            article.appendChild(div);
         });
     }, []);
 
