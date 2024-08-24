@@ -49,26 +49,24 @@
 
 #events_container h3 {
     margin-top: 2rem;
-    /* padding-left: 1rem; */
 }
 
 #events_container article p {
-    margin-top: 1rem;
-    /* padding-left: 1rem; */
+    margin-top: 2rem;
     color: var(--light-gray);
-}
-
-#events_container article a {
-    text-decoration: none;
-    color: var(--white);
-    /* display: block; */
+    display: grid;
+    grid-template-columns: 3fr 1fr;
 }
 
 #events_container article a {
     cursor: pointer;
-    margin-top: 1rem;
     color: var(--light-gray);
     text-decoration: underline;
+}
+
+#events_container article span {
+    justify-self: end;
+    cursor: pointer;
 }
 
 @media (min-width: 1060px) {
