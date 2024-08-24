@@ -25,8 +25,11 @@
 }
 
 #event-info_container article p {
-    margin-top: 1rem;
+    margin-top: 2rem;
     color: var(--light-gray);
+}
+
+#event-info_container article:nth-child(2) p {
     display: grid;
     grid-template-columns: 3fr 1fr;
 }
@@ -35,6 +38,11 @@
     cursor: pointer;
     text-decoration: underline;
     color: var(--light-gray);
+    display: inline;
+}
+
+#event-info_container article a:hover {
+    color: var(--yellow-rig);
 }
 
 #event-info_container article span {
@@ -96,6 +104,10 @@ table td {
     #event-info_container article {
         padding-left: 2rem;
         padding-right: 2rem;
+    }
+
+    #event-info_container article:nth-child(2) p {
+        grid-template-columns: 2fr 7fr;
     }
 
     table {
