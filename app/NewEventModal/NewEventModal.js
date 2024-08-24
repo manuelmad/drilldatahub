@@ -2,8 +2,8 @@ import './NewEventModal.css';
 import { db } from '../firebase/firebase-config';
 import { collection, getDocs, addDoc, Timestamp } from "firebase/firestore";
 
- // Array containing all event types
- const event_types = [
+// Array containing all event types
+export const event_types = [
     {
         type: '--------',
         subtypes: ['--------']
@@ -197,12 +197,6 @@ export default function NewEventModal ({
 
                 </input>
             </p>
-            {/* <p>
-                <label htmlFor='init_date'>Indique la FECHA FINAL del evento:</label>
-                <input id='final_date' type='datetime-local'>
-
-                </input>
-            </p> */}
             <p>
                 <label htmlFor='estimated_time'>Indique el TIEMPO ESTIMADO del evento (días):</label>
                 <input id='estimated_time' type='number'>

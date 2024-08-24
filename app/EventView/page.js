@@ -4,15 +4,18 @@ import './EventView.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ExcelImporter from '../ExcelImporter/ExcelImporter';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { HeaderContext } from '../context/context';
 
 import { db } from '../firebase/firebase-config';
 import { getAuth, onAuthStateChanged  } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, updateDoc, query, orderBy, deleteDoc } from "firebase/firestore";
+import EventInfoEditor from '../EventInfoEditor/EventInfoEditor';
 
 export default function EventView() {
+
+    const [eventEditorDisplay, setEventEditorDisplay] = useState({display: 'none'});
 
     const getEventInfo = async () => {
         const event_info_container = document.getElementById('event-info_container');
@@ -78,6 +81,9 @@ export default function EventView() {
         const p8 = document.createElement('p');
         const eventInfoEditButton = document.createElement('button');
         eventInfoEditButton.innerText = 'Editar';
+        eventInfoEditButton.onclick = () => {
+            setEventEditorDisplay({display: 'block'});
+        }
         p8.appendChild(eventInfoEditButton);
         article1.appendChild(h2);
         article1.appendChild(p5);
@@ -254,6 +260,10 @@ export default function EventView() {
                     <ExcelImporter></ExcelImporter>
                 </section>
                 <section id='current-report__container'></section>
+                <EventInfoEditor
+                    eventEditorDisplay={eventEditorDisplay}
+                    setEventEditorDisplay={setEventEditorDisplay}
+                />
             </main>
             <Footer />
         </>
