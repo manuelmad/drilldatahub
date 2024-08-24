@@ -89,8 +89,10 @@ export default function EventView() {
         orderedReports.docs.forEach(report => {
             const reportInfo = report.data();
             const a = document.createElement('a');
+            const p = document.createElement('p');
             a.innerHTML = `${reportInfo.Tipo} - ${((new Date ((reportInfo['Fecha'].seconds)*1000)).getDate())+1}/${((new Date ((reportInfo['Fecha'].seconds)*1000)).getMonth())+1}/${(new Date ((reportInfo['Fecha'].seconds)*1000)).getFullYear()}.`;
-            article2.appendChild(a);
+            p.appendChild(a);
+            article2.appendChild(p);
             // Event to create a table when a report in the list is clicked
             a.addEventListener('click', ()=> {
                 reportViewer.innerHTML = '';

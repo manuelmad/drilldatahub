@@ -30,7 +30,6 @@
 }
 
 #event-info_container article a {
-    display: block;
     cursor: pointer;
     text-decoration: underline;
     margin-top: 1rem;

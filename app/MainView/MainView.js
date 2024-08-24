@@ -145,13 +145,14 @@ export default function MainView () {
                         // Inserting the name of the well that has events and inserting each event as an item of a list
                         const h3 = document.createElement('h3');
                         h3.innerText = `${well.id}`;
-                        const p = document.createElement('p');
+                        const div2 = document.createElement('div');
                         orderedEvents.docs.forEach(event => {
                             const eventInfo = event.data();
                             const dayi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getDate();
                             const monthi = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getMonth();
                             const yeari = (new Date ((eventInfo['Fecha Inicial'].seconds)*1000)).getFullYear();
                             const eventTitle = `${eventInfo.Tipo} - ${dayi+1}/${monthi+1}/${yeari}`;
+                            const p = document.createElement('p');
                             const a = document.createElement('a');
                             a.innerText = eventTitle;
                             a.href = '/EventView';
@@ -160,9 +161,10 @@ export default function MainView () {
                                 localStorage.setItem('eventRef', `${col.id}/${well.id}/eventos/${event.id}`);
                             };
                             p.appendChild(a);
+                            div2.appendChild(p);
                         });
                         div.appendChild(h3);
-                        div.appendChild(p);
+                        div.appendChild(div2);
                     } else {
                         //console.log(`No hay eventos en el pozo ${well.id}`);
                     }
