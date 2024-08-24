@@ -67,6 +67,7 @@
 #events_container article span {
     justify-self: end;
     cursor: pointer;
+    color: var(--yellow-rig);
 }
 
 @media (min-width: 1060px) {

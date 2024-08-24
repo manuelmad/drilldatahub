@@ -27,13 +27,20 @@
 #event-info_container article p {
     margin-top: 1rem;
     color: var(--light-gray);
+    display: grid;
+    grid-template-columns: 3fr 1fr;
 }
 
 #event-info_container article a {
     cursor: pointer;
     text-decoration: underline;
-    margin-top: 1rem;
     color: var(--light-gray);
+}
+
+#event-info_container article span {
+    justify-self: end;
+    cursor: pointer;
+    color: var(--yellow-rig);
 }
 
 table {
