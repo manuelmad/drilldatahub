@@ -29,6 +29,14 @@
     color: var(--light-gray);
 }
 
+#event-info_container article:first-child p:last-child {
+    text-align: end;
+}
+
+#event-info_container article:first-child p:last-child button {
+    width: 4.5rem;
+}
+
 #event-info_container article:nth-child(2) p {
     display: grid;
     grid-template-columns: 3fr 1fr;

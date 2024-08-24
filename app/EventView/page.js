@@ -75,6 +75,10 @@ export default function EventView() {
         p6.innerHTML = `Objetivo: ${eventData.Objetivo}.`;
         const p7 = document.createElement('p');
         p7.innerHTML = `Tiempo Estimado: ${eventData['Tiempo Estimado']} días.`;
+        const p8 = document.createElement('p');
+        const eventInfoEditButton = document.createElement('button');
+        eventInfoEditButton.innerText = 'Editar';
+        p8.appendChild(eventInfoEditButton);
         article1.appendChild(h2);
         article1.appendChild(p5);
         article1.appendChild(p3);
@@ -83,6 +87,7 @@ export default function EventView() {
         article1.appendChild(p7);
         article1.appendChild(p1);
         article1.appendChild(p2);
+        article1.appendChild(p8);
         event_info_container.appendChild(article1);
 
         // Create article to show a list of existing reports
