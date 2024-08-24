@@ -43,6 +43,13 @@ export default function EventView() {
                     seconds: finalDate
                 }
             });
+        } else {
+            // Establish the event's final date as NaN
+            await updateDoc(eventDoc, {
+                'Fecha Final':{
+                    seconds: NaN
+                }
+            });
         }
 
         // Get all updated data from the event (doc)
