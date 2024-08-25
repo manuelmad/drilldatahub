@@ -1,10 +1,17 @@
+'use client';
+
 import './EventInfoEditor.css';
 import { event_types } from '../NewEventModal/NewEventModal';
+import { useEffect } from 'react';
+
+import { db } from '../firebase/firebase-config';
+import { collection, doc, getDoc, getDocs, updateDoc, query, orderBy, deleteDoc } from "firebase/firestore";
 
 export default function EventInfoEditor({
     eventEditorDisplay,
     setEventEditorDisplay
 }) {
+
     // function to add options in the subtype select, corrsponding to the selected type event
     const showSubtype = (e) => {
         const event_subtype_select = document.getElementById('event_subtype_select');
@@ -28,8 +35,33 @@ export default function EventInfoEditor({
     const hideEventEditor = ()=> {
         setEventEditorDisplay({display: 'none'});
     }
+
+    const getInputsValues = async () => {
+        // Get data from localStorage
+        let eventRefInStorage = localStorage.getItem('eventRef');
+
+        // Create a ref to the event (doc)
+        let eventDoc = doc(db, eventRefInStorage);
+
+        // Get all updated data from the event (doc)
+        let eventRef = await getDoc(eventDoc);
+
+        let eventData = eventRef.data();
+
+        document.getElementById('goal_formation').value = eventData.Objetivo;
+        document.getElementById('rig_name').value = eventData.Taladro;
+        let month = ((new Date ((eventData['Fecha Inicial'].seconds)*1000)).getMonth())+1;
+        let day = ((new Date((eventData['Fecha Inicial'].seconds)*1000)).getDate())+1;
+        document.getElementById('init_date').value = `${(new Date ((eventData['Fecha Inicial'].seconds)*1000)).getFullYear()}-${month<10 ? '0'+month : month}-${day<10 ? '0'+day : day}`;
+        document.getElementById('estimated_time').value = eventData['Tiempo Estimado'];
+    }
+
+    useEffect(()=> {
+        getInputsValues();
+    }, []);
+
     return(
-        <section style={eventEditorDisplay}>
+        <section className='event-editor__container' style={eventEditorDisplay}>
             <div>
                 <p>
                     <label htmlFor='event_type_select'>Tipo de evento:</label>
@@ -69,11 +101,11 @@ export default function EventInfoEditor({
 
                     </input>
                 </p>
-                <p id='new-event__container'>
-                    <button onClick={updateEvent} id='new_event'>ACTUALIZAR EVENTO</button>
+                <p id='update-event__container'>
+                    <button onClick={updateEvent} id='update_event'>ACTUALIZAR EVENTO</button>
                 </p>
-                <p id='cancel-event-btn__container'>
-                    <button onClick={hideEventEditor} id='cancel_event_btn'>CANCELAR</button>
+                <p id='cancel-update-btn__container'>
+                    <button onClick={hideEventEditor} id='cancel_update_btn'>CANCELAR</button>
                 </p>
             </div>
         </section>
