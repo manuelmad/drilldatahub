@@ -105,7 +105,6 @@ export default function EventView() {
                 event_subtype_select.appendChild(subtype_option);
             });
             let subOptions = document.getElementById('event_subtype_select').children;
-            console.log(subOptions);
             [...subOptions].forEach(option => {
                 if(option.value === eventData.subOptions) {
                     option.selected = true;
@@ -121,7 +120,7 @@ export default function EventView() {
             document.getElementById('estimated_time').value = eventData['Tiempo Estimado'];
             setEventEditorDisplay({display: 'block'});
         }
-        
+
         p8.appendChild(eventInfoEditButton);
         article1.appendChild(h2);
         article1.appendChild(p5);

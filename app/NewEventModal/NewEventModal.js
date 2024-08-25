@@ -37,6 +37,7 @@ export default function NewEventModal ({
         // Clearing wells select
         const well_select = document.getElementById('well_select');
         well_select.innerHTML = '';
+        
         // Getting the corresponding collection id
         const col_id = e.target.value
         if(col_id === '--------') {
@@ -86,7 +87,6 @@ export default function NewEventModal ({
         const formation_name = document.getElementById('goal_formation').value;
         const rig_name = document.getElementById('rig_name').value;
         const init_date = document.getElementById('init_date').valueAsNumber;
-        //const final_date = document.getElementById('final_date').value;
         const estimated_time = document.getElementById('estimated_time').value;
 
         // Stablishing conditions so the user HAS to fill all the fields.

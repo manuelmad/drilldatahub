@@ -1,7 +1,7 @@
 import './ExcelImporter.css';
-import * as XLS from 'xlsx'; // Importing the library to import excel files
+import * as XLS from 'xlsx'; // Importing the library to transform excel data into a JSON
 import { db } from '../firebase/firebase-config';
-import { collection, getDocs, addDoc, Timestamp } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 export default function ExcelImporter() {
     // Variable to save all the rows of the excel file
@@ -21,11 +21,13 @@ export default function ExcelImporter() {
             return false;
         }
 
-        // Calling the library to import an excel file
+        // Import an excel file
         const reader = new FileReader();
         reader.readAsBinaryString(file);
         reader.onload = (e) => {
             const data = e.target.result;
+
+            // Calling the library to create the JSON from excel data
             const zzexcel = XLS.read(data, {
                 type: 'binary'
             });
@@ -40,6 +42,7 @@ export default function ExcelImporter() {
                 return false;
             }
             const resultKeys = [];
+
             // Code to go through all sheets (not necessary with the previous conditional) in the excel file, creating an object for every row and adding it as a new element in the "result" array
             for (let i = 0; i < zzexcel.SheetNames.length; i++) {
                 const newData = XLS.utils.sheet_to_json(zzexcel.Sheets[zzexcel.SheetNames[i]]);
@@ -48,8 +51,6 @@ export default function ExcelImporter() {
                     resultKeys.push(Object.keys(newData[j]));
                 }
             }
-            // console.log('result', result);
-            // console.log('resultKeys', resultKeys);
 
             // Code to abort the function if the excel file has wrong values in the first row
             if(resultKeys[0][0] !== 'DESDE' || resultKeys[0][1] !== 'HASTA' || resultKeys[0][2] !== 'TOTAL' || resultKeys[0][3] !== 'CODIGO' || resultKeys[0][4] !== 'OPERACIONES') {

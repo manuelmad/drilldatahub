@@ -11,7 +11,7 @@
     position: fixed;
     width: 30rem;
     height: 62rem;
-    background-color: var(--white);
+    background-color: var(--light-gray);
     border-radius: 0.5rem;
     padding: 1rem;
     margin: 0 auto;
@@ -29,6 +29,7 @@
     height: 4rem;
     border-radius: 0.5rem;
     padding: 0.5rem;
+    font-size: var(--md);
 }
 
 .event-editor__container div select {
@@ -36,6 +37,11 @@
     border-radius: 0.5rem;
     width: 100%;
     height: 4rem;
+    font-size: var(--md);
+}
+
+.event-editor__container div label {
+    font-weight: bold;
 }
 
 #update-event__container {
