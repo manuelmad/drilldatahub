@@ -13,6 +13,8 @@ import { getAuth, onAuthStateChanged  } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, updateDoc, query, orderBy, deleteDoc } from "firebase/firestore";
 import EventInfoEditor from '../EventInfoEditor/EventInfoEditor';
 
+import { event_types } from '../NewEventModal/NewEventModal';
+
 export default function EventView() {
 
     const [eventEditorDisplay, setEventEditorDisplay] = useState({display: 'none'});
@@ -82,8 +84,44 @@ export default function EventView() {
         const eventInfoEditButton = document.createElement('button');
         eventInfoEditButton.innerText = 'Editar';
         eventInfoEditButton.onclick = () => {
+            // Setting values for selects
+            // Setting as selected the option of type equal to the existing in the db
+            let options = document.getElementById('event_type_select').children;
+            [...options].forEach(option => {
+                if(option.value === eventData.Tipo) {
+                    option.selected = true;
+                }
+            });
+
+            // Adding suptypes into the corresponding select abd setting as selected the option of subtype equal to the existing in the db
+            const event_subtype_select = document.getElementById('event_subtype_select');
+            event_subtype_select.innerHTML = '';
+            const typeValue = document.getElementById('event_type_select').value;
+            const typeMatch = event_types.find(type => type.type === typeValue);
+            typeMatch.subtypes.forEach(subtype => {
+                const subtype_option = document.createElement('option');
+                subtype_option.innerText = subtype;
+                subtype_option.value = subtype;
+                event_subtype_select.appendChild(subtype_option);
+            });
+            let subOptions = document.getElementById('event_subtype_select').children;
+            console.log(subOptions);
+            [...subOptions].forEach(option => {
+                if(option.value === eventData.subOptions) {
+                    option.selected = true;
+                }
+            });
+        
+            // Setting the values for inputs
+            document.getElementById('goal_formation').value = eventData.Objetivo;
+            document.getElementById('rig_name').value = eventData.Taladro;
+            let month = ((new Date ((eventData['Fecha Inicial'].seconds)*1000)).getMonth())+1;
+            let day = ((new Date((eventData['Fecha Inicial'].seconds)*1000)).getDate())+1;
+            document.getElementById('init_date').value = `${(new Date ((eventData['Fecha Inicial'].seconds)*1000)).getFullYear()}-${month<10 ? '0'+month : month}-${day<10 ? '0'+day : day}`;
+            document.getElementById('estimated_time').value = eventData['Tiempo Estimado'];
             setEventEditorDisplay({display: 'block'});
         }
+        
         p8.appendChild(eventInfoEditButton);
         article1.appendChild(h2);
         article1.appendChild(p5);

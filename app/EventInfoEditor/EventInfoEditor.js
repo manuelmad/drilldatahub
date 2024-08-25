@@ -1,11 +1,8 @@
-'use client';
-
 import './EventInfoEditor.css';
 import { event_types } from '../NewEventModal/NewEventModal';
-import { useEffect } from 'react';
 
-import { db } from '../firebase/firebase-config';
-import { collection, doc, getDoc, getDocs, updateDoc, query, orderBy, deleteDoc } from "firebase/firestore";
+// import { db } from '../firebase/firebase-config';
+// import { collection, doc, getDoc, getDocs, updateDoc, query, orderBy, deleteDoc } from "firebase/firestore";
 
 export default function EventInfoEditor({
     eventEditorDisplay,
@@ -35,30 +32,6 @@ export default function EventInfoEditor({
     const hideEventEditor = ()=> {
         setEventEditorDisplay({display: 'none'});
     }
-
-    const getInputsValues = async () => {
-        // Get data from localStorage
-        let eventRefInStorage = localStorage.getItem('eventRef');
-
-        // Create a ref to the event (doc)
-        let eventDoc = doc(db, eventRefInStorage);
-
-        // Get all updated data from the event (doc)
-        let eventRef = await getDoc(eventDoc);
-
-        let eventData = eventRef.data();
-
-        document.getElementById('goal_formation').value = eventData.Objetivo;
-        document.getElementById('rig_name').value = eventData.Taladro;
-        let month = ((new Date ((eventData['Fecha Inicial'].seconds)*1000)).getMonth())+1;
-        let day = ((new Date((eventData['Fecha Inicial'].seconds)*1000)).getDate())+1;
-        document.getElementById('init_date').value = `${(new Date ((eventData['Fecha Inicial'].seconds)*1000)).getFullYear()}-${month<10 ? '0'+month : month}-${day<10 ? '0'+day : day}`;
-        document.getElementById('estimated_time').value = eventData['Tiempo Estimado'];
-    }
-
-    useEffect(()=> {
-        getInputsValues();
-    }, []);
 
     return(
         <section className='event-editor__container' style={eventEditorDisplay}>
