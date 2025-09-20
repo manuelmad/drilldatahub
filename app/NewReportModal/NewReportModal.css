@@ -1,0 +1,38 @@
+.new-report__modal {
+    width: 28rem;
+    min-height: 10rem;
+    color: var(--white);
+    border: 0.3rem solid var(--yellow-rig);
+    border-radius: 0.5rem;
+    padding: 4rem 1rem;
+    margin: 4rem auto 0;
+}
+
+.new-report__modal p {
+    color: var(--white);
+    margin: 1rem auto 0;
+    width: 20rem;
+}
+
+#cancel-event-btn__container {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+#cancel_event_btn {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--yellow-rig);
+    color: var(--white);
+    background-color: var(--dark-background);
+    cursor: pointer;
+}
+
+#cancel_event_btn:active {
+    background-color: var(--yellow-rig);
+    border: 0.3rem solid var(--dark-background);
+    color: var(--black);
+}

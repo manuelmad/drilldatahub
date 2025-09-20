@@ -87,7 +87,7 @@ table td {
     border: 0.1rem solid var(--black);
 }
 
-#create_new_report_btn {
+#import_new_report_btn, #create_new_report_btn {
     width: 20rem;
     height: 5rem;
     font-size: var(--md);
@@ -98,7 +98,7 @@ table td {
     margin-top: 2rem;
 }
 
-#create_new_report_btn:active {
+#import_new_report_btn:active, #create_new_report_btn {
     background-color: var(--dark-background);
     border: 0.3rem solid var(--yellow-rig);
     color: var(--white);

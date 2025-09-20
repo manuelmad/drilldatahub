@@ -12,12 +12,14 @@ import { db } from '../firebase/firebase-config';
 import { getAuth, onAuthStateChanged  } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, updateDoc, query, orderBy, deleteDoc } from "firebase/firestore";
 import EventInfoEditor from '../EventInfoEditor/EventInfoEditor';
+import NewReportModal from '../NewReportModal/NewReportModal';
 
 import { event_types } from '../NewEventModal/NewEventModal';
 
 export default function EventView() {
 
     const [eventEditorDisplay, setEventEditorDisplay] = useState({display: 'none'});
+    const [newReportModalDisplay, setNewReportModalDisplay] = useState({display: 'none'});
 
     const getEventInfo = async () => {
         const event_info_container = document.getElementById('event-info_container');
@@ -261,6 +263,26 @@ export default function EventView() {
         div.style.display = 'block';
     }
 
+    // Function to show new Report Modal
+    const showNewEventModal = ()=> {
+        setNewReportModalDisplay({display: 'block'});
+        // Code to scroll to the position of the modal
+        const element = document.querySelector('.new-report__modal');
+        const offset = 300;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition + offset;
+        
+        // A little delay while the section is shown and able to go there
+        setTimeout(()=> {
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }, 500);
+    }
+
     // Getting the states from de context so the function onAuthStateChanged doesn´t cause an error
     let { setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
 
@@ -292,8 +314,15 @@ export default function EventView() {
                 </section>
                 <section className='new-report-btn__container'>
                     <p>
-                        <button id='create_new_report_btn' onClick={showImportDiv}>Importar nuevo reporte</button>
+                        <button id='create_new_report_btn' onClick={showNewEventModal}>Crear nuevo reporte</button>
                     </p>
+                    <p>
+                        <button id='import_new_report_btn' onClick={showImportDiv}>Importar nuevo reporte</button>
+                    </p>
+                    <NewReportModal
+                        newReportModalDisplay={newReportModalDisplay}
+                        setNewReportModalDisplay={setNewReportModalDisplay}
+                    ></NewReportModal>
                     <ExcelImporter></ExcelImporter>
                 </section>
                 <section id='current-report__container'></section>
