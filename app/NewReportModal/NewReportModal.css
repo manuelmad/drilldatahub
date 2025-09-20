@@ -1,5 +1,11 @@
+.new-report__section {
+    width: 60rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .new-report__modal {
-    width: 28rem;
+    width: 60rem;
     min-height: 10rem;
     color: var(--white);
     border: 0.3rem solid var(--yellow-rig);
@@ -11,7 +17,27 @@
 .new-report__modal p {
     color: var(--white);
     margin: 1rem auto 0;
+    width: 50rem;
+}
+
+.new-report__modal p select,.new-report__modal p input {
+    height: 5rem;
     width: 20rem;
+    margin-top: 1rem;
+}
+
+.new-report-table__container {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+}
+
+/* .new-report-table__container table input {
+    width: 5rem;
+} */
+
+.new-report-table__container table textarea {
+    height: 10rem;
 }
 
 #cancel-event-btn__container {
@@ -35,4 +61,18 @@
     background-color: var(--yellow-rig);
     border: 0.3rem solid var(--dark-background);
     color: var(--black);
+}
+
+@media (min-width: 1060px) {
+    .new-report__section, .new-report__modal {
+        width: 80rem;
+    }
+
+    .new-report__modal p  {
+        width: 70rem;
+    }
+
+    .new-report-table__container table textarea {
+        width: 40rem;
+    }
 }

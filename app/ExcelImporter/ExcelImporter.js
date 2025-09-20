@@ -121,7 +121,9 @@ export default function ExcelImporter() {
 
     return (
         <div className='import-container'>
-            <p>Fecha: <input type='date' id='new_report_date' /> </p>
+            <p>
+                <span>Fecha:</span>
+                <input type='date' id='new_report_date' /> </p>
             <p>
                 <span>Tipo de reporte:</span>
                 <select id='report_type_select'>

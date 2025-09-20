@@ -1,19 +1,32 @@
 .import-container {
     border: 0.3rem solid var(--yellow-rig);
     padding: 2rem;
-    margin-top: 2rem;
+    margin: 2rem auto 0;
     display: none;
+    width: 28rem;
 }
 
 .import-container p {
     color: var(--white);
+    text-align: center;
+    overflow: hidden;
 }
+
+.import-container p span {
+    display: block;
+    margin-top: 2rem;
+}
+
+.import-container p input {
+    margin-top: 2rem;
+}
+
 
 .import-container select {
     height: 5rem;
     width: 20rem;
     margin-top: 1rem;
-    margin-left: 1rem;
+    /* margin-left: 1rem; */
 }
 
 #new_report_date {
@@ -46,6 +59,7 @@
     color: var(--white);
     background-color: var(--dark-background);
     cursor: pointer;
+    margin-top: 4rem;
 }
 
 #new_report_cancel:active {

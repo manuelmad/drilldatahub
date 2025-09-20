@@ -319,12 +319,13 @@ export default function EventView() {
                     <p>
                         <button id='import_new_report_btn' onClick={showImportDiv}>Importar nuevo reporte</button>
                     </p>
-                    <NewReportModal
+
+                </section>
+                <NewReportModal
                         newReportModalDisplay={newReportModalDisplay}
                         setNewReportModalDisplay={setNewReportModalDisplay}
                     ></NewReportModal>
-                    <ExcelImporter></ExcelImporter>
-                </section>
+                <ExcelImporter></ExcelImporter>
                 <section id='current-report__container'></section>
                 <EventInfoEditor
                     eventEditorDisplay={eventEditorDisplay}
