@@ -72,9 +72,11 @@ export default function NewReportModal({
         // Insert the textarea into the cell
         new_cell5.appendChild(new_textarea);
 
-        // Inster the row in the tbody
+        // Inster the row in the tbody, before the last row
         const report_table_body = document.getElementById('report_table_body');
-        report_table_body.appendChild(new_row);
+        let last_row = report_table_body.lastElementChild;
+        report_table_body.insertBefore(new_row, last_row);
+        //report_table_body.appendChild(new_row);
     }
 
     function deleteRow() {
@@ -83,9 +85,10 @@ export default function NewReportModal({
         let rows_qty = report_table_body.getElementsByTagName("tr").length;
 
         //Condition so the button doesn't work when there is only the default row
-        if(rows_qty > 1) {
-            let last_row = report_table_body.lastElementChild;
-            report_table_body.removeChild(last_row);
+        if(rows_qty > 2) {
+            // let last_row = report_table_body.lastElementChild;
+            // report_table_body.removeChild(last_row);
+            report_table_body.deleteRow(rows_qty-2)
         }
 
         // Actualizo las horas totales del reporte
@@ -142,6 +145,13 @@ export default function NewReportModal({
                                     </select>
                                 </td>
                                 <td><textarea></textarea></td>
+                            </tr>
+                            <tr id='last_row'>
+                                <td colSpan="2"></td>
+                                <td>
+                                    <span id='hoursInDay'></span>
+                                </td>
+                                <td colSpan="2"></td>
                             </tr>
                         </tbody>
 
