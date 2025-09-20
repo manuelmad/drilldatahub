@@ -26,10 +26,21 @@
     margin-top: 1rem;
 }
 
+.new-report__modal .rows-btns__container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+#add_row, #delete_row {
+    width: 5rem;
+}
+
 .new-report-table__container {
     display: flex;
     justify-content: center;
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 /* .new-report-table__container table input {
