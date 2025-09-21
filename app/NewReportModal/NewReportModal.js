@@ -128,8 +128,8 @@ export default function NewReportModal({
             report_table_body.deleteRow(rows_qty-2)
         }
 
-        // Actualizo las horas totales del reporte
-        //calculateTotalDailyHours();
+        // Update total hours of report
+        calculateTotalDailyHours();
     }
 
     useEffect(()=> {
@@ -143,7 +143,7 @@ export default function NewReportModal({
             let f_time_minutes = Number(final_time_input.value.slice(0,2))*60 + Number(final_time_input.value.slice(3));
             let time = (f_time_minutes - i_time_minutes)/60;
             activity_hours_span.innerText = `${time}`;
-            calculateTotalDailyHours()
+            calculateTotalDailyHours();
         });
 
         final_time_input.addEventListener('input', (e)=> {
@@ -151,7 +151,7 @@ export default function NewReportModal({
             let f_time_minutes = Number(e.target.value.slice(0,2))*60 + Number(e.target.value.slice(3));
             let time = (f_time_minutes - i_time_minutes)/60;
             activity_hours_span.innerText = `${time}`;
-            calculateTotalDailyHours()
+            calculateTotalDailyHours();
         });
     },[]);
 
