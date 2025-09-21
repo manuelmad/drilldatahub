@@ -47,6 +47,19 @@
     width: 5rem;
 } */
 
+#last_row {
+    height: 4rem;
+}
+
+#last_row td:nth-child(1), #last_row td:nth-child(3) {
+    background-color: var(--dark-background);
+    border: none;
+}
+
+#last_row td:nth-child(2) {
+    background-color: var(--yellow-rig);
+}
+
 .new-report-table__container table textarea {
     height: 10rem;
 }
