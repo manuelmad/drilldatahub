@@ -75,20 +75,24 @@ export default function Header(/*{
     return(
         <header className='header'>
             <div className='personal-logo-container'>
-                <Image
-                    src='/personal-logo.png'
-                    width={312}
-                    height={107}
-                    alt='DDH logo'
-                />
+                <Link href='/'>
+                    <Image
+                        src='/personal-logo.png'
+                        width={312}
+                        height={107}
+                        alt='DDH logo'
+                    />
+                </Link>
             </div>
             <div className='logo-container'>
-                <Image
-                    src='/DDH.png'
-                    width={200}
-                    height={200}
-                    alt='DDH logo'
-                />
+                <Link href='/'>
+                    <Image
+                        src='/DDH.png'
+                        width={200}
+                        height={200}
+                        alt='DDH logo'
+                    />
+                </Link>
             </div>
             <div className='buttons__container'>
                 <button id='login_btn_header' onClick={logIn} style={loginHeaderButton}>Log In</button>

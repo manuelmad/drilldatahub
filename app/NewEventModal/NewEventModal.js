@@ -19,6 +19,10 @@ export const event_types = [
     {
         type: 'RA/RC',
         subtypes: ['Cambio de método', 'Limpieza de fondo', 'Pesca']   
+    },
+    {
+        type: 'Mantenimiento',
+        subtypes: ['Mantenimiento']
     }
 ];
 
