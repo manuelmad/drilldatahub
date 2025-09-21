@@ -10,6 +10,25 @@ export default function NewReportModal({
         setNewReportModalDisplay({display: 'none'});
     }
 
+    // const calculateTimetoSpam = (value1, value2, node) => {
+    //     console.log(value1);
+    //     console.log(value2);
+    //     let i_time_minutes = Number(value1.slice(0,3))*60 + Number(value1.slice(4));
+    //     let f_time_minutes = Number(value2.slice(0,3))*60 + Number(value2.slice(4));;
+
+    //     let time = (f_time_minutes - i_time_minutes)/60;
+    //     console.log(time);
+    //     node.innerText = `${time}`;
+    //     //calculateTotalDailyHours();
+    // }
+
+    // Use the function above with the inputs and span of the 1st row
+    // const initial_time = document.getElementById('initial_time');
+    // const final_time = document.getElementById('final_time');
+    // const activity_hours = document.getElementById('activity_hours');
+
+    //initial_time.addEventListener('input', calculateTimetoSpam(initial_time.value, final_time.value, activity_hours));
+
     // Function to add rows to the table
     const addRow = () => {
         //Create new row
@@ -50,6 +69,22 @@ export default function NewReportModal({
         new_span.classList.add("activity-hours");
         // Insert the span into its cells
         new_cell3.appendChild(new_span);
+
+        // Add event to the inputs to calculate the time of the activity
+        new_input.addEventListener('input', (e)=> {
+            let i_time_minutes = Number(e.target.value.slice(0,2))*60 + Number(e.target.value.slice(3));
+            let f_time_minutes = Number(new_input2.value.slice(0,2))*60 + Number(new_input2.value.slice(3));
+            let time = (f_time_minutes - i_time_minutes)/60;
+            new_span.innerText = `${time}`;
+        });
+
+        new_input2.addEventListener('input', (e)=> {
+            let i_time_minutes = Number(new_input.value.slice(0,2))*60 + Number(new_input.value.slice(3));
+            let f_time_minutes = Number(e.target.value.slice(0,2))*60 + Number(e.target.value.slice(3));
+            let time = (f_time_minutes - i_time_minutes)/60;
+            new_span.innerText = `${time}`;
+        });
+
 
         // Create 1 select with 2 options
         let new_select = document.createElement("select");
@@ -149,7 +184,7 @@ export default function NewReportModal({
                             <tr id='last_row'>
                                 <td colSpan="2"></td>
                                 <td>
-                                    <span id='hoursInDay'></span>
+                                    <span id='hoursInDay_container'></span>
                                 </td>
                                 <td colSpan="2"></td>
                             </tr>
