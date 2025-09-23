@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { db } from '../firebase/firebase-config';
+import { collection, addDoc } from "firebase/firestore";
 import './NewReportModal.css';
 
 export default function NewReportModal({
@@ -132,6 +134,101 @@ export default function NewReportModal({
         calculateTotalDailyHours();
     }
 
+    // Function to send the imported report to firebase database
+    // Variable to save all the rows of the table
+    let result = [];
+    const sendReportFromTable = async () => {
+        // Getting the value saved from EventView component
+        let reportsInEvent = localStorage.getItem('reportsInEvent');
+        // Creating a ref with that value
+        const reportsInEventRef = collection(db, reportsInEvent);
+
+        // Getting values from HTML
+        const reportDate = document.getElementById('new_report_date_forModal').valueAsNumber;
+        const reportType = document.getElementById('report_type_select_forModal').value;
+
+        // Establishing conditions to abort the sending of the report if any value is missing
+        if(document.getElementById('new_report_date_forModal').value == '') {
+            alert('Por favor, ingrese la fecha del reporte.');
+            return;
+        }
+
+        if(reportType == '--------') {
+            alert('Por favor, elija un tipo de reporte.');
+            return;
+        }
+
+        result = []; // Cleaning the array before adding elements
+
+        // Code to go through all rows in the table, creating an object for every row and adding it as a new element in the "result" array
+        let report_table_body = document.getElementById("report_table_body");
+        let rows = [...report_table_body.getElementsByTagName("tr")];
+        rows.pop();
+        
+        console.log('rows',rows);
+
+        rows.forEach(row => { // tr's
+            let childs = [...row.childNodes]; // td's
+            console.log('childs',childs);
+            
+            let object = {
+                CODIGO: childs[3].childNodes[0].value,
+                DESDE: childs[0].childNodes[0].value,
+                HASTA: childs[1].childNodes[0].value,
+                OPERACIONES: childs[4].childNodes[0].value,
+                TOTAL: childs[2].childNodes[0].innerText,
+            }
+
+            result.push(object);
+        });
+
+
+        console.log('result',result);
+        // Condition to force the user to fill every cell in the table
+        let check = true;
+        result.forEach(element => {
+            if(element.DESDE === '' || element.HASTA === '' || element.OPERACIONES === '' || element.TOTAL === '') {
+                check = false;
+            }
+        })
+
+        if(!check) {
+            alert('Por favor, llene toda la información requerida en la tabla.');
+            return;
+        }
+
+        // Variable to save the objects created from the table
+        let activities = [];
+        
+        // Function to push in the array an object for every row in the table
+        result.forEach(element => {
+            let d = Number(element.DESDE.slice(0,2))*60 + Number(element.DESDE.slice(3));
+            let h = Number(element.HASTA.slice(0,2))*60 + Number(element.HASTA.slice(3));
+            let t = Number(element.TOTAL)*60;
+            
+            let object = {
+                Código: element.CODIGO,
+                Desde: Number(d),
+                Hasta: Number(h),
+                Actividad: element.OPERACIONES,
+                Total: Number(t),
+            }
+            activities.push(object);
+        });
+
+        console.log('activities',activities);
+
+        // Creating a new Doc in the eventos collection, with an automatic id (addDoc)
+        await addDoc(reportsInEventRef, {
+            'Fecha':{
+                seconds: (reportDate)/1000
+            },
+            'Tipo': reportType,
+            'Actividades': activities // Sending an array of objects to firebase
+        });
+        window.location.reload(); // I can't find a better way to update the list of events at 'events_container'
+    }
+
     useEffect(()=> {
         // Handling the inputs od the 1st row and show the hours in the span
         let activity_hours_span = document.getElementById("activity_hours");
@@ -158,10 +255,10 @@ export default function NewReportModal({
     return(
         <section style={newReportModalDisplay} className='new-report__section'>
             <div className='new-report__modal'>
-                <p>Fecha: <input type='date' id='new_report_date_forTable' /> </p>
+                <p>Fecha: <input type='date' id='new_report_date_forModal' /> </p>
                 <p>
                     <span>Tipo de reporte: </span>
-                    <select id='report_type_select_forTable'>
+                    <select id='report_type_select_forModal'>
                     <option value={'--------'}>--------</option>
                         <option value={'Mudanza'}>Mudanza</option>
                         <option value={'Operaciones'}>Operaciones</option>
@@ -219,7 +316,7 @@ export default function NewReportModal({
 
                 </div>
                 <p>
-                    <button id='send_new_report_btn'>ENVIAR REPORTE</button>
+                    <button id='send_new_report_btn_forModal' onClick={sendReportFromTable}>ENVIAR REPORTE</button>
                 </p>
                 <p id='cancel-event-btn__container'>
                     <button onClick={hideNewReportModal} id='cancel_event_btn'>CANCELAR</button>

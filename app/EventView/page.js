@@ -244,7 +244,7 @@ export default function EventView() {
                 td6.setAttribute('colspan', 2);
                 // td6.innerHTML = 'Horas totales:';
                 const td7 = document.createElement('td');
-                td7.innerHTML = `${hoursInDay.toFixed(0)}`;
+                td7.innerHTML = `${hoursInDay.toFixed(1)}`;
                 const td8 = document.createElement('td');
                 const td9 = document.createElement('td');
                 trbody2.appendChild(td6);
@@ -314,7 +314,7 @@ export default function EventView() {
                 </section>
                 <section className='new-report-btn__container'>
                     <p>
-                        <button id='create_new_report_btn' onClick={showNewEventModal}>Crear nuevo reporte</button>
+                        <button id='create_new_report_btn' onClick={showNewEventModal}>Redactar nuevo reporte</button>
                     </p>
                     <p>
                         <button id='import_new_report_btn' onClick={showImportDiv}>Importar nuevo reporte</button>

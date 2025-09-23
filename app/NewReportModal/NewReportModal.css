@@ -64,6 +64,17 @@
     height: 10rem;
 }
 
+#send_new_report_btn_forModal {
+    width: 20rem;
+    height: 5rem;
+    font-size: var(--md);
+    font-weight: bold;
+    background-color: var(--yellow-rig);
+    border-radius: 1rem;
+    cursor: pointer;
+    margin-top: 4rem;
+}
+
 #cancel-event-btn__container {
     text-align: center;
     margin-top: 4rem;
