@@ -21,6 +21,23 @@ export default function EventView() {
     const [eventEditorDisplay, setEventEditorDisplay] = useState({display: 'none'});
     const [newReportModalDisplay, setNewReportModalDisplay] = useState({display: 'none'});
 
+    // Function to calculate total hours in report
+    function calculateTotalDailyHours(tableBody) {
+        const report_table_body = tableBody;
+        let array = report_table_body.getElementsByClassName("activity-hours");
+        console.log(array)
+
+        let i = 0;
+
+        Array.prototype.forEach.call(
+            array, (item)=> {
+                i=i+Number(item.innerText);
+            }
+        );
+
+        document.getElementById('totalHoursCell').innerHTML = i.toFixed(1);
+    }
+
     const getEventInfo = async () => {
         const event_info_container = document.getElementById('event-info_container');
 
@@ -221,19 +238,82 @@ export default function EventView() {
                 reportInfo.Actividades.forEach(activity => {
                     const trbody = document.createElement('tr');
                     const td1 = document.createElement('td');
+                    const inputTimeFrom = document.createElement('input');
+                    inputTimeFrom.setAttribute('type', 'time');
                     let a = (((activity.Desde)/60)-Math.floor((activity.Desde)/60))*60;
-                    td1.innerHTML = `${Math.floor((activity.Desde)/60)}:${a === 0 ? '00' : a.toFixed(0)}`;
+                    console.log(a)
+                    inputTimeFrom.setAttribute('value', `${a === 0 ? '00' : Math.floor((activity.Desde)/60)}:${a === 0 ? '00' : a.toFixed(0)}`);
+                    td1.appendChild(inputTimeFrom);
+                    console.log(inputTimeFrom.value)
+                    //td1.innerHTML = `${Math.floor((activity.Desde)/60)}:${a === 0 ? '00' : a.toFixed(0)}`;
                     const td2 = document.createElement('td');
+                    const inputTimeTo = document.createElement('input');
+                    inputTimeTo.setAttribute('type', 'time');
                     let b = (((activity.Hasta)/60)-Math.floor((activity.Hasta)/60))*60;
-                    td2.innerHTML = `${Math.floor((activity.Hasta)/60)}:${b === 0 ? '00' : b.toFixed(0)}`;
+                    console.log(b)
+                    inputTimeTo.setAttribute('value', `${b === 0 ? '00' : Math.floor((activity.Hasta)/60)}:${b === 0 ? '00' : b.toFixed(0)}`);
+                    td2.appendChild(inputTimeTo);
+                    console.log(inputTimeTo.value)
+                    //td2.innerHTML = `${Math.floor((activity.Hasta)/60)}:${b === 0 ? '00' : b.toFixed(0)}`;
                     const td3 = document.createElement('td');
+                    td3.classList.add("activity-hours");
                     let c = (((activity.Total)/60)-Math.floor((activity.Total)/60))*60;
-                    td3.innerHTML = `${Math.floor((activity.Total)/60)}:${c === 0 ? '00' : c.toFixed(0)}`;
+                    td3.innerHTML = `${c === 0 ? '00' : Math.floor((activity.Total)/60)}:${c === 0 ? '00' : c.toFixed(0)}`;
+
+                    // Add event to the inputs to calculate the time of the activity
+                    inputTimeFrom.addEventListener('input', (e)=> {
+                        let i_time_minutes = Number(e.target.value.slice(0,2))*60 + Number(e.target.value.slice(3));
+                        let f_time_minutes = Number(inputTimeTo.value.slice(0,2))*60 + Number(inputTimeTo.value.slice(3));
+                        let time = ((f_time_minutes - i_time_minutes)/60).toFixed(1);
+                        td3.innerHTML = `${time}`;
+                        calculateTotalDailyHours(tbody);
+                    });
+
+                    inputTimeTo.addEventListener('input', (e)=> {
+                        let i_time_minutes = Number(inputTimeFrom.value.slice(0,2))*60 + Number(inputTimeFrom.value.slice(3));
+                        let f_time_minutes = Number(e.target.value.slice(0,2))*60 + Number(e.target.value.slice(3));
+                        let time = ((f_time_minutes - i_time_minutes)/60).toFixed(1);
+                        td3.innerHTML = `${time}`;
+                        calculateTotalDailyHours(tbody);
+                    });
+                    //let c = (((activity.Total)/60)-Math.floor((activity.Total)/60))*60;
+                    //td3.innerHTML = `${Math.floor((activity.Total)/60)}:${c === 0 ? '00' : c.toFixed(0)}`;
                     const td4 = document.createElement('td');
-                    td4.innerHTML = `${activity.Código}`;
+                    let new_select = document.createElement("select");
+                    new_select.classList.add("code"); // code
+
+                    let new_select_value = `${activity.Código}`;
+
+                    let new_option = document.createElement("option");
+                    new_option.innerText = "P";
+
+                    if(new_select_value == new_option.innerText) {
+                        new_option.selected = 'selected';
+                    }
+
+                    let new_option2 = document.createElement("option");
+                    new_option2.innerText = "NP";
+
+                    if(new_select_value == new_option2.innerText) {
+                        new_option2.selected = 'selected';
+                    }
+                    // Insert the options into the select
+                    new_select.appendChild(new_option);
+                    new_select.appendChild(new_option2);
+                    // Insert the select into the cell
+                    td4.appendChild(new_select);
+                    td4.value = new_select_value;
+                    //td4.innerHTML = `${activity.Código}`;
                     td4.setAttribute('class', 'code-column')
                     const td5 = document.createElement('td');
-                    td5.innerHTML = `${activity.Actividad}`;
+
+                    // Create 1 text area
+                    let new_textarea = document.createElement("textarea");
+                    new_textarea.classList.add("activity");
+                    new_textarea.value = `${activity.Actividad}`;
+                    // Insert the textarea into the cell
+                    td5.appendChild(new_textarea);
+                    //td5.innerHTML = `${activity.Actividad}`;
                     trbody.appendChild(td1);
                     trbody.appendChild(td2);
                     trbody.appendChild(td3);
@@ -249,6 +329,7 @@ export default function EventView() {
                 td6.setAttribute('colspan', 2);
                 // td6.innerHTML = 'Horas totales:';
                 const td7 = document.createElement('td');
+                td7.setAttribute('id', 'totalHoursCell');
                 td7.innerHTML = `${hoursInDay.toFixed(1)}`;
                 const td8 = document.createElement('td');
                 const td9 = document.createElement('td');
@@ -258,6 +339,15 @@ export default function EventView() {
                 trbody2.appendChild(td9);
                 tbody.appendChild(trbody2);
                 reportViewer.appendChild(table);
+                const btn_container = document.createElement('p');
+                const editReportButton = document.createElement('button');
+                editReportButton.innerText = 'Actualizar reporte';
+                editReportButton.addEventListener('click', ()=> {
+                    console.log('Enviar reporte corregido.');
+                    //setNewReportModalDisplay({display: 'block'});
+                });
+                btn_container.appendChild(editReportButton);
+                reportViewer.appendChild(btn_container);
             });
         });
         event_info_container.appendChild(article2);
