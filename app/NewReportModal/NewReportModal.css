@@ -53,7 +53,7 @@
 
 #last_row td:nth-child(1), #last_row td:nth-child(3) {
     background-color: var(--dark-background);
-    border: none;
+    border-color: var(--dark-background);
 }
 
 #last_row td:nth-child(2) {

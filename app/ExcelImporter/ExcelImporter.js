@@ -135,7 +135,7 @@ export default function ExcelImporter() {
             </p>
             <p><input id='file_report' accept='.xls, .xlsx' type='file' onChange={jsonFromExcel}/></p>
             <p>
-                <button onClick={sendReport} id='send_new_report_btn'>ENVIAR REPORTE</button>
+                <button onClick={sendReport} id='send_new_report_btn'>GUARDAR REPORTE</button>
             </p>
             <p>
                 <button id='new_report_cancel' onClick={hideImportDiv}>CANCELAR</button>

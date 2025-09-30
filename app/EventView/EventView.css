@@ -124,9 +124,9 @@ table td {
         padding-right: 2rem;
     }
 
-    #event-info_container article:nth-child(2) p {
+    /* #event-info_container article:nth-child(2) p {
         grid-template-columns: 2fr 7fr;
-    }
+    } */
 
     table {
         font-size: var(--md);

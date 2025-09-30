@@ -76,7 +76,7 @@ export default function NewReportModal({
         new_input.addEventListener('input', (e)=> {
             let i_time_minutes = Number(e.target.value.slice(0,2))*60 + Number(e.target.value.slice(3));
             let f_time_minutes = Number(new_input2.value.slice(0,2))*60 + Number(new_input2.value.slice(3));
-            let time = (f_time_minutes - i_time_minutes)/60;
+            let time = ((f_time_minutes - i_time_minutes)/60).toFixed(1);
             new_span.innerText = `${time}`;
             calculateTotalDailyHours();
         });
@@ -84,7 +84,7 @@ export default function NewReportModal({
         new_input2.addEventListener('input', (e)=> {
             let i_time_minutes = Number(new_input.value.slice(0,2))*60 + Number(new_input.value.slice(3));
             let f_time_minutes = Number(e.target.value.slice(0,2))*60 + Number(e.target.value.slice(3));
-            let time = (f_time_minutes - i_time_minutes)/60;
+            let time = ((f_time_minutes - i_time_minutes)/60).toFixed(1);
             new_span.innerText = `${time}`;
             calculateTotalDailyHours();
         });
@@ -230,7 +230,7 @@ export default function NewReportModal({
     }
 
     useEffect(()=> {
-        // Handling the inputs od the 1st row and show the hours in the span
+        // Handling the inputs on the 1st row and show the hours in the span
         let activity_hours_span = document.getElementById("activity_hours");
         let initial_time_input = document.getElementById("initial_time");
         let final_time_input = document.getElementById("final_time");
@@ -238,7 +238,7 @@ export default function NewReportModal({
         initial_time_input.addEventListener('input', (e)=> {
             let i_time_minutes = Number(e.target.value.slice(0,2))*60 + Number(e.target.value.slice(3));
             let f_time_minutes = Number(final_time_input.value.slice(0,2))*60 + Number(final_time_input.value.slice(3));
-            let time = (f_time_minutes - i_time_minutes)/60;
+            let time = ((f_time_minutes - i_time_minutes)/60).toFixed(1);
             activity_hours_span.innerText = `${time}`;
             calculateTotalDailyHours();
         });
@@ -246,7 +246,7 @@ export default function NewReportModal({
         final_time_input.addEventListener('input', (e)=> {
             let i_time_minutes = Number(initial_time_input.value.slice(0,2))*60 + Number(initial_time_input.value.slice(3));
             let f_time_minutes = Number(e.target.value.slice(0,2))*60 + Number(e.target.value.slice(3));
-            let time = (f_time_minutes - i_time_minutes)/60;
+            let time = ((f_time_minutes - i_time_minutes)/60).toFixed(1);
             activity_hours_span.innerText = `${time}`;
             calculateTotalDailyHours();
         });
@@ -306,7 +306,7 @@ export default function NewReportModal({
                             <tr id='last_row'>
                                 <td colSpan="2"></td>
                                 <td>
-                                    <span id='totalHours_container'>{totalHours}</span>
+                                    <span id='totalHours_container'>{totalHours.toFixed(1)}</span>
                                 </td>
                                 <td colSpan="2"></td>
                             </tr>
@@ -316,7 +316,7 @@ export default function NewReportModal({
 
                 </div>
                 <p>
-                    <button id='send_new_report_btn_forModal' onClick={sendReportFromTable}>ENVIAR REPORTE</button>
+                    <button id='send_new_report_btn_forModal' onClick={sendReportFromTable}>GUARDAR REPORTE</button>
                 </p>
                 <p id='cancel-event-btn__container'>
                     <button onClick={hideNewReportModal} id='cancel_event_btn'>CANCELAR</button>
