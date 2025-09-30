@@ -163,6 +163,11 @@ export default function EventView() {
             article2.appendChild(p);
             // Event to create a table when a report in the list is clicked
             a.addEventListener('click', ()=> {
+                // First hide all others containers
+                setNewReportModalDisplay({display: 'none'});
+                hideImportDiv();
+
+                // Then show the required
                 reportViewer.innerHTML = '';
                 const table = document.createElement('table');
                 const thead = document.createElement('thead');
@@ -259,12 +264,32 @@ export default function EventView() {
     }
 
     const showImportDiv = () => {
+        // First hide all others containers
+        setNewReportModalDisplay({display: 'none'});
+
+        const reportViewer = document.getElementById('current-report__container');
+        reportViewer.innerHTML = '';
+
+        // Then show the required
         const div = document.querySelector('.import-container');
         div.style.display = 'block';
+        
+    }
+
+    const hideImportDiv = () => {
+        const div = document.querySelector('.import-container');
+        div.style.display = 'none';
     }
 
     // Function to show new Report Modal
     const showNewEventModal = ()=> {
+        // First hide all others containers
+        hideImportDiv();
+
+        const reportViewer = document.getElementById('current-report__container');
+        reportViewer.innerHTML = '';
+
+        // Then show the required
         setNewReportModalDisplay({display: 'block'});
         // Code to scroll to the position of the modal
         const element = document.querySelector('.new-report__modal');
@@ -324,7 +349,7 @@ export default function EventView() {
                 <NewReportModal
                         newReportModalDisplay={newReportModalDisplay}
                         setNewReportModalDisplay={setNewReportModalDisplay}
-                    ></NewReportModal>
+                ></NewReportModal>
                 <ExcelImporter></ExcelImporter>
                 <section id='current-report__container'></section>
                 <EventInfoEditor
