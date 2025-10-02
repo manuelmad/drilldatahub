@@ -131,7 +131,7 @@ export default function NewReportModal({
         calculateTotalDailyHours();
     }
 
-    // Function to send the imported report to firebase database
+    // Function to send the created report to firebase database
     // Variable to save all the rows of the table
     let result = [];
     const sendReportFromTable = async () => {
@@ -162,11 +162,11 @@ export default function NewReportModal({
         let rows = [...report_table_body.getElementsByTagName("tr")];
         rows.pop();
         
-        console.log('rows',rows);
+        //console.log('rows',rows);
 
         rows.forEach(row => { // tr's
             let childs = [...row.childNodes]; // td's
-            console.log('childs',childs);
+            //console.log('childs',childs);
             
             let object = {
                 CODIGO: childs[3].childNodes[0].value,
@@ -180,7 +180,7 @@ export default function NewReportModal({
         });
 
 
-        console.log('result',result);
+        //console.log('result',result);
         // Condition to force the user to fill every cell in the table
         let check = true;
         result.forEach(element => {
@@ -213,7 +213,7 @@ export default function NewReportModal({
             activities.push(object);
         });
 
-        console.log('activities',activities);
+        //console.log('activities',activities);
 
         // Creating a new Doc in the eventos collection, with an automatic id (addDoc)
         await addDoc(reportsInEventRef, {

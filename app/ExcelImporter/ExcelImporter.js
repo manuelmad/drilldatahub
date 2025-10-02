@@ -51,7 +51,7 @@ export default function ExcelImporter() {
                     resultKeys.push(Object.keys(newData[j]));
                 }
             }
-            console.log(result);
+            //console.log(result);
             // Code to abort the function if the excel file has wrong values in the first row
             if(resultKeys[0][0] !== 'DESDE' || resultKeys[0][1] !== 'HASTA' || resultKeys[0][2] !== 'TOTAL' || resultKeys[0][3] !== 'CODIGO' || resultKeys[0][4] !== 'OPERACIONES') {
                 alert('Por favor, modifique el archivo para que sea compatible con la aplicación. La primera fila debe contener exactamente los siguientes valores en el orden mostrado: DESDE, HASTA, TOTAL, CODIGO, OPERACIONES.');

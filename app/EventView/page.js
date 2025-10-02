@@ -25,7 +25,7 @@ export default function EventView() {
     function calculateTotalDailyHours(tableBody) {
         const report_table_body = tableBody;
         let array = report_table_body.getElementsByClassName("activity-hours");
-        console.log(array);
+        //console.log(array);
 
         let i = 0;
 
@@ -137,6 +137,7 @@ export default function EventView() {
         calculateTotalDailyHours(report_table_body);
     }
 
+    let curren_report_viewed;
     const getEventInfo = async () => {
         const event_info_container = document.getElementById('event-info_container');
 
@@ -261,6 +262,7 @@ export default function EventView() {
 
         orderedReports.docs.forEach(report => {
             const reportInfo = report.data();
+            //console.log(report.id)
             const a = document.createElement('a');
             const p = document.createElement('p');
             a.innerHTML = `${reportInfo.Tipo} - ${((new Date ((reportInfo['Fecha'].seconds)*1000)).getDate())+1}/${((new Date ((reportInfo['Fecha'].seconds)*1000)).getMonth())+1}/${(new Date ((reportInfo['Fecha'].seconds)*1000)).getFullYear()}.`;
@@ -279,6 +281,10 @@ export default function EventView() {
             article2.appendChild(p);
             // Event to create a table when a report in the list is clicked
             a.addEventListener('click', ()=> {
+                // Save the current report id to overwrite it later in database
+                curren_report_viewed = report.id;
+                //console.log(curren_report_viewed);
+
                 // First hide all others containers
                 setNewReportModalDisplay({display: 'none'});
                 hideImportDiv();
@@ -355,19 +361,19 @@ export default function EventView() {
                     const inputTimeFrom = document.createElement('input');
                     inputTimeFrom.setAttribute('type', 'time');
                     let a = (((activity.Desde)/60)-Math.floor((activity.Desde)/60))*60;
-                    console.log(a)
-                    inputTimeFrom.setAttribute('value', `${a === 0 ? '00' : Math.floor((activity.Desde)/60)}:${a === 0 ? '00' : a.toFixed(0)}`);
+                    //console.log(a)
+                    inputTimeFrom.setAttribute('value', `${activity.Desde == 0 ? '00' : Math.floor((activity.Desde)/60)}:${a === 0 ? '00' : a.toFixed(0)}`);
                     td1.appendChild(inputTimeFrom);
-                    console.log(inputTimeFrom.value)
+                    //console.log(inputTimeFrom.value)
                     //td1.innerHTML = `${Math.floor((activity.Desde)/60)}:${a === 0 ? '00' : a.toFixed(0)}`;
                     const td2 = document.createElement('td');
                     const inputTimeTo = document.createElement('input');
                     inputTimeTo.setAttribute('type', 'time');
                     let b = (((activity.Hasta)/60)-Math.floor((activity.Hasta)/60))*60;
-                    console.log(b)
-                    inputTimeTo.setAttribute('value', `${b === 0 ? '00' : Math.floor((activity.Hasta)/60)}:${b === 0 ? '00' : b.toFixed(0)}`);
+                    //console.log(b)
+                    inputTimeTo.setAttribute('value', `${Math.floor((activity.Hasta)/60)}:${b === 0 ? '00' : b.toFixed(0)}`);
                     td2.appendChild(inputTimeTo);
-                    console.log(inputTimeTo.value)
+                    //console.log(inputTimeTo.value)
                     //td2.innerHTML = `${Math.floor((activity.Hasta)/60)}:${b === 0 ? '00' : b.toFixed(0)}`;
                     const td3 = document.createElement('td');
                     td3.classList.add("activity-hours");
@@ -457,8 +463,7 @@ export default function EventView() {
                 const editReportButton = document.createElement('button');
                 editReportButton.innerText = 'Actualizar reporte';
                 editReportButton.addEventListener('click', ()=> {
-                    console.log('Enviar reporte corregido.');
-                    //setNewReportModalDisplay({display: 'block'});
+                    sendReportFromUpdatedTable();
                 });
                 btn_container.appendChild(editReportButton);
                 reportViewer.appendChild(btn_container);
@@ -521,7 +526,103 @@ export default function EventView() {
         }, 500);
     }
 
-    // Getting the states from de context so the function onAuthStateChanged doesn´t cause an error
+    // Function to send the updated report to firebase database
+    // Variable to save all the rows of the table
+    let result = [];
+    const sendReportFromUpdatedTable = async () => {
+        // Getting the value saved from EventView component
+        let reportsInEvent = localStorage.getItem('reportsInEvent');
+
+        // Ref to the current report
+        const docRef = doc(db, reportsInEvent, curren_report_viewed);
+
+        // Getting values from HTML
+        // const reportDate = document.getElementById('new_report_date_forModal').valueAsNumber;
+        // const reportType = document.getElementById('report_type_select_forModal').value;
+
+        // Establishing conditions to abort the sending of the report if any value is missing
+        // if(document.getElementById('new_report_date_forModal').value == '') {
+        //     alert('Por favor, ingrese la fecha del reporte.');
+        //     return;
+        // }
+
+        // if(reportType == '--------') {
+        //     alert('Por favor, elija un tipo de reporte.');
+        //     return;
+        // }
+
+        result = []; // Cleaning the array before adding elements
+
+        // Code to go through all rows in the table, creating an object for every row and adding it as a new element in the "result" array
+        let report_table_body = document.getElementById("table_body");
+        let rows = [...report_table_body.getElementsByTagName("tr")];
+        rows.pop();
+        
+        //console.log('rows',rows);
+
+        rows.forEach(row => { // tr's
+            let childs = [...row.childNodes]; // td's
+            //console.log('childs',childs);
+            
+            let object = {
+                CODIGO: childs[3].childNodes[0].value,
+                DESDE: childs[0].childNodes[0].value,
+                HASTA: childs[1].childNodes[0].value,
+                OPERACIONES: childs[4].childNodes[0].value,
+                TOTAL: childs[2].innerText,
+            }
+
+            result.push(object);
+        });
+
+
+        //console.log('result',result);
+        // Condition to force the user to fill every cell in the table
+        let check = true;
+        result.forEach(element => {
+            if(element.DESDE === '' || element.HASTA === '' || element.OPERACIONES === '' || element.TOTAL === '') {
+                check = false;
+            }
+        })
+
+        if(!check) {
+            alert('Por favor, llene toda la información requerida en la tabla.');
+            return;
+        }
+
+        // Variable to save the objects created from the table
+        let activities = [];
+        
+        // Function to push in the array an object for every row in the table
+        result.forEach(element => {
+            let d = Number(element.DESDE.slice(0,2))*60 + Number(element.DESDE.slice(3));
+            let h = Number(element.HASTA.slice(0,2))*60 + Number(element.HASTA.slice(3));
+            let t = Number(element.TOTAL)*60;
+            
+            let object = {
+                Código: element.CODIGO,
+                Desde: Number(d),
+                Hasta: Number(h),
+                Actividad: element.OPERACIONES,
+                Total: Number(t),
+            }
+            activities.push(object);
+        });
+
+        //console.log('activities',activities);
+
+        // Overwriting the curent Doc in the reportes collection, with the same id (setDoc)
+        await updateDoc(docRef, {
+            // 'Fecha':{
+            //     seconds: (reportDate)/1000
+            // },
+            // 'Tipo': reportType,
+            'Actividades': activities // Sending an array of objects to firebase
+        });
+        window.location.reload(); // I can't find a better way to update the list of events at 'events_container'
+    }
+
+    // Getting the states from de context so the function onAuthStateChanged doesn't cause an error
     let { setLoginHeaderButton, setLogoutHeaderButton } = useContext(HeaderContext);
 
     useEffect(()=> {
