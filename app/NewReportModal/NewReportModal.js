@@ -115,7 +115,6 @@ export default function NewReportModal({
         const report_table_body = document.getElementById('report_table_body');
         let last_row = report_table_body.lastElementChild;
         report_table_body.insertBefore(new_row, last_row);
-        //report_table_body.appendChild(new_row);
     }
 
     function deleteRow() {
@@ -125,8 +124,6 @@ export default function NewReportModal({
 
         //Condition so the button doesn't work when there is only the default row
         if(rows_qty > 2) {
-            // let last_row = report_table_body.lastElementChild;
-            // report_table_body.removeChild(last_row);
             report_table_body.deleteRow(rows_qty-2)
         }
 
