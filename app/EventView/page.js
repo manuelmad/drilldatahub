@@ -15,11 +15,107 @@ import EventInfoEditor from '../EventInfoEditor/EventInfoEditor';
 import NewReportModal from '../NewReportModal/NewReportModal';
 
 import { event_types } from '../NewEventModal/NewEventModal';
+import * as XLSX from 'xlsx';
+import { downloadReportPDFFromElement } from './PdfDownloader';
 
 export default function EventView() {
 
     const [eventEditorDisplay, setEventEditorDisplay] = useState({display: 'none'});
     const [newReportModalDisplay, setNewReportModalDisplay] = useState({display: 'none'});
+
+    async function downloadPdfReport() {
+        const reportViewer = document.getElementById('current-report__container');
+        if(!reportViewer) {
+            alert('Seleccione un reporte');
+            return;
+        }
+
+        const table = reportViewer.querySelector('table');
+        if(!table) {
+            alert('Seleccione un reporte');
+            return;
+        }
+
+        try {
+            // Convert inputs/selects/textarea values to static text in a cloned element so the PDF reflects visible values
+            const cloneTable = table.cloneNode(true);
+            const inputs = cloneTable.querySelectorAll('input');
+            inputs.forEach(input => {
+                const parent = input.parentNode;
+                const text = document.createTextNode(input.value || '');
+                parent.removeChild(input);
+                parent.appendChild(text);
+            });
+            const selects = cloneTable.querySelectorAll('select');
+            selects.forEach(select => {
+                const parent = select.parentNode;
+                const text = document.createTextNode(select.value || '');
+                parent.removeChild(select);
+                parent.appendChild(text);
+            });
+            const textareas = cloneTable.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                const parent = textarea.parentNode;
+                const text = document.createTextNode(textarea.value || '');
+                parent.removeChild(textarea);
+                parent.appendChild(text);
+            });
+
+            await downloadReportPDFFromElement(cloneTable, 'reporte.pdf');
+        } catch (err) {
+            console.error('Error while creating PDF:', err);
+            alert('Ocurrió un error al generar el PDF. Verifique la consola para más detalles.');
+        }
+    }
+
+    function downloadExcelReport() {
+        // Find the table inside the current report container
+        const reportViewer = document.getElementById('current-report__container');
+        if (!reportViewer) {
+            alert('Seleccione un reporte');
+            return;
+        }
+
+        const table = reportViewer.querySelector('table');
+        if (!table) {
+            alert('Seleccione un reporte');
+            return;
+        }
+
+        try {
+            // Clone so we can mutate the copy (replace inputs/select/textarea with text)
+            const cloneTable = table.cloneNode(true);
+
+            // Replace inputs, selects and textareas by their current value
+            cloneTable.querySelectorAll('input, select, textarea').forEach(el => {
+                const parent = el.parentNode;
+                const value = el.value || el.textContent || '';
+                const textNode = document.createTextNode(value);
+                parent.replaceChild(textNode, el);
+            });
+
+            // Remove action buttons that might be in the DOM (like + or - row buttons) to keep excel clean
+            cloneTable.querySelectorAll('button, .add-row-btn, .delete-row-btn').forEach(node => node.remove());
+
+            // Ensure clone is in the DOM for xml conversion to behave correctly
+            const tempContainer = document.createElement('div');
+            tempContainer.style.position = 'fixed';
+            tempContainer.style.left = '-9999px';
+            tempContainer.style.top = '0px';
+            tempContainer.appendChild(cloneTable);
+            document.body.appendChild(tempContainer);
+
+            // Convert table to workbook and trigger download
+            const wb = XLSX.utils.table_to_book(cloneTable, { sheet: 'Reporte' });
+            XLSX.writeFile(wb, 'reporte.xlsx');
+
+            // Cleanup
+            if (tempContainer.parentNode) tempContainer.parentNode.removeChild(tempContainer);
+        } catch (err) {
+            console.error('Error exporting Excel:', err);
+            alert('Ocurrió un error al generar el archivo Excel. Revise la consola para más detalles.');
+        }
+    }
 
     // Function to calculate total hours in report
     function calculateTotalDailyHours(tableBody) {
@@ -658,7 +754,6 @@ export default function EventView() {
                     <p>
                         <button id='import_new_report_btn' onClick={showImportDiv}>Importar nuevo reporte</button>
                     </p>
-
                 </section>
                 <NewReportModal
                         newReportModalDisplay={newReportModalDisplay}
@@ -666,6 +761,14 @@ export default function EventView() {
                 ></NewReportModal>
                 <ExcelImporter></ExcelImporter>
                 <section id='current-report__container'></section>
+                <section className='download-report-btns__container'>
+                    <p>
+                        <button id='download_pdf_report_btn' onClick={downloadPdfReport}>Descargar reporte en .pdf</button>
+                    </p>
+                    <p>
+                        <button id='download_excel_report_btn' onClick={downloadExcelReport}>Descargar reporte en excel</button>
+                    </p>
+                </section>
                 <EventInfoEditor
                     eventEditorDisplay={eventEditorDisplay}
                     setEventEditorDisplay={setEventEditorDisplay}

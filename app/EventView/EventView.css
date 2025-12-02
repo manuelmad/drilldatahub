@@ -1,4 +1,4 @@
-#event-info_container, #current-report__container, .new-report-btn__container {
+#event-info_container, #current-report__container, .new-report-btn__container, .download-report-btns__container {
     width: 28rem;
     margin: 0 auto;
     padding-top: 4rem;
@@ -13,7 +13,7 @@
     border-top: 0.15rem solid var(--light-gray);
 }
 
-.new-report-btn__container p {
+.new-report-btn__container p, .download-report-btns__container p {
     text-align: center;
     margin-top: 2rem;
 }
@@ -124,7 +124,7 @@ table td {
 }
 
 
-#import_new_report_btn, #create_new_report_btn, #current-report__container p:last-child button {
+#import_new_report_btn, #create_new_report_btn, #current-report__container p:last-child button, #download_pdf_report_btn, #download_excel_report_btn {
     width: 20rem;
     height: 5rem;
     font-size: var(--md);
@@ -134,24 +134,24 @@ table td {
     cursor: pointer;
 }
 
-#create_new_report_btn {
+#create_new_report_btn, #download_excel_report_btn {
     margin-top: 2rem;
 }
 
-#import_new_report_btn:active, #create_new_report_btn:active, #current-report__container p:last-child button:active {
+#import_new_report_btn:active, #create_new_report_btn:active, #current-report__container p:last-child button:active, #download_pdf_report_btn:active, #download_excel_report_btn:active {
     background-color: var(--dark-background);
     border: 0.3rem solid var(--yellow-rig);
     color: var(--white);
 }
 
 @media (min-width: 800px) {
-    #event-info_container, #current-report__container, .new-report-btn__container {
+    #event-info_container, #current-report__container, .new-report-btn__container, .download-report-btns__container {
         width: 50rem;
     }
 }
 
 @media (min-width: 1060px) {
-    #event-info_container, #current-report__container, .new-report-btn__container {
+    #event-info_container, #current-report__container, .new-report-btn__container, .download-report-btns__container {
         width: 80rem;
     }
 
